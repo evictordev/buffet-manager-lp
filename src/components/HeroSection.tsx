@@ -76,7 +76,7 @@ export function HeroSection() {
             data-hero-text
             className="mt-6 text-4xl font-semibold leading-[1.08] text-balance sm:text-5xl lg:text-[3.5rem]"
           >
-            Seu buffet mais organizado. Seus eventos sob controle.
+            Seu buffet merece uma gestão à altura dos seus eventos.
           </h1>
           <p data-hero-text className="mt-6 text-lg leading-relaxed text-mist-400">
             Gerencie eventos, orçamentos, contratos, profissionais e clientes em um só lugar. Simplifique sua rotina e

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ChefHat } from 'lucide-react'
 import type { BuffetSceneHandle } from './scene'
+import { SCENE_ITEMS } from './scene-items'
 
 /**
  * Cena 3D da cloche (Three.js). O Three é carregado sob demanda para não pesar o bundle inicial.
@@ -10,6 +11,7 @@ export function BuffetScene() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [failed, setFailed] = useState(false)
   const [ready, setReady] = useState(false)
+  const [item, setItem] = useState(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -34,6 +36,7 @@ export function BuffetScene() {
         handle = createBuffetScene(canvas, {
           reducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,
           lowPower: window.matchMedia('(max-width: 767px)').matches,
+          onItem: setItem,
         })
         handle.setVisible(visible)
         setReady(true)
@@ -54,7 +57,7 @@ export function BuffetScene() {
       <canvas
         ref={canvasRef}
         role="img"
-        aria-label="Cloche prateada que se levanta e revela um prato gourmet com vapor"
+        aria-label={`Cloche prateada que se levanta e revela: ${SCENE_ITEMS[item].label}`}
         className={`size-full transition-opacity duration-700 ${ready ? 'opacity-100' : 'opacity-0'} ${failed ? 'hidden' : ''}`}
       />
       {failed ? (

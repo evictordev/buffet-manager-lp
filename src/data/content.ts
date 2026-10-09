@@ -12,13 +12,11 @@ import {
   LayoutDashboard,
   ListChecks,
   ListOrdered,
-  MousePointerClick,
   Package,
   PanelsTopLeft,
   PlusCircle,
   SearchCheck,
   Users,
-  Wallet,
   type LucideIcon,
 } from 'lucide-react'
 import type { Tone } from '../lib/tones'
@@ -42,29 +40,6 @@ export type FeatureGroup = {
   gallery?: ShotRef[]
   highlight?: boolean
 }
-
-export const BENEFITS: FeatureItem[] = [
-  {
-    icon: Layers,
-    title: 'Gestão centralizada',
-    text: 'Reúna as informações do buffet em um só ambiente.',
-  },
-  {
-    icon: ListChecks,
-    title: 'Mais organização',
-    text: 'Acompanhe eventos, clientes, profissionais e recursos.',
-  },
-  {
-    icon: Wallet,
-    title: 'Controle financeiro',
-    text: 'Organize orçamentos, contratos e folhas de pagamento.',
-  },
-  {
-    icon: MousePointerClick,
-    title: 'Mais praticidade',
-    text: 'Reduza tarefas manuais e facilite o acompanhamento da operação.',
-  },
-]
 
 export const FEATURE_GROUPS: FeatureGroup[] = [
   {

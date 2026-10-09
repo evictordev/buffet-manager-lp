@@ -14,9 +14,9 @@ import {
 import { gsap } from '../../../lib/gsap'
 import { createCloche } from './cloche'
 import { createEnvironment } from './environment'
-import { createFood } from './food'
+import { createItems } from './items'
 import { createLights } from './lights'
-import { createPlate, createPlatter } from './platter'
+import { createPlatter } from './platter'
 import { createSteam } from './steam'
 
 export type BuffetSceneOptions = {
@@ -24,6 +24,8 @@ export type BuffetSceneOptions = {
   reducedMotion: boolean
   /** Telas pequenas/dispositivos fracos: menos partículas, sombras e pixel ratio menores. */
   lowPower: boolean
+  /** Chamado quando o item revelado muda (índice em SCENE_ITEMS). */
+  onItem?: (index: number) => void
 }
 
 export type BuffetSceneHandle = {
@@ -53,8 +55,9 @@ export function createBuffetScene(canvas: HTMLCanvasElement, opts: BuffetSceneOp
   scene.add(createLights(opts.lowPower ? 1024 : 2048))
   scene.add(createPlatter())
 
+  const items = createItems()
   const dish = new Group()
-  dish.add(createPlate(), createFood())
+  items.forEach((item) => dish.add(item.group))
   scene.add(dish)
 
   const cloche = createCloche()
@@ -67,6 +70,7 @@ export function createBuffetScene(canvas: HTMLCanvasElement, opts: BuffetSceneOp
 
   // Estado animado pela timeline
   const state = { lift: opts.reducedMotion ? 1 : 0, steam: opts.reducedMotion ? 0.7 : 0 }
+  let current = 0
   const pointer = { x: 0, y: 0, sx: 0, sy: 0 }
   let distance = 9
   let height = 600
@@ -96,11 +100,11 @@ export function createBuffetScene(canvas: HTMLCanvasElement, opts: BuffetSceneOp
     if (!opts.reducedMotion) {
       pointer.sx += (pointer.x - pointer.sx) * 0.05
       pointer.sy += (pointer.y - pointer.sy) * 0.05
-      dish.rotation.y = t * 0.18
     }
+    items[current].animate(opts.reducedMotion ? 0 : t)
     applyState()
     placeCamera()
-    steam.update(opts.reducedMotion ? 6 : t, state.steam, height * 0.5)
+    steam.update(opts.reducedMotion ? 6 : t, state.steam * items[current].steam, height * 0.5)
     renderer.render(scene, camera)
   }
 
@@ -127,16 +131,26 @@ export function createBuffetScene(canvas: HTMLCanvasElement, opts: BuffetSceneOp
     render()
   }
 
+  function show(index: number) {
+    current = index
+    items.forEach((item, i) => (item.group.visible = i === index))
+    opts.onItem?.(index)
+  }
+  show(0)
+
   // Loop: fechada → levanta e revela com vapor → desce
-  const timeline = gsap.timeline({ repeat: -1, paused: true })
+  // timeScale acelera o ciclo inteiro: abrir, mostrar o item, fechar e trocar
+  const timeline = gsap.timeline({ repeat: -1, paused: true, timeScale: 1.5 })
   if (!opts.reducedMotion) {
     timeline
       .to(state, { lift: 0, steam: 0, duration: 0.01 })
-      .to(state, { lift: 1, duration: 1.8, ease: 'power3.inOut' }, 1.2)
-      .to(state, { steam: 1, duration: 1.6, ease: 'sine.inOut' }, 2.2)
+      .to(state, { lift: 1, duration: 1.1, ease: 'power3.inOut' }, 0.5)
+      .to(state, { steam: 1, duration: 1.4, ease: 'sine.inOut' }, 1.3)
       .to(state, { steam: 0.55, duration: 2.5, ease: 'sine.inOut' }, 4.4)
       .to(state, { steam: 0, duration: 1.1, ease: 'sine.in' }, 6.4)
       .to(state, { lift: 0, duration: 1.6, ease: 'power3.inOut' }, 6.9)
+      // Com a cloche já fechada, troca para o próximo item
+      .call(() => show((current + 1) % items.length), [], 9.3)
       .to(state, {}, 9.5)
   }
 

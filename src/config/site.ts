@@ -26,7 +26,6 @@ if (import.meta.env.DEV && !SITE.contactConfigured) {
 export const screenshot = (name: string) => `${import.meta.env.BASE_URL}screenshots/${name}.webp`
 
 export const NAV_LINKS = [
-  { id: 'beneficios', label: 'Benefícios' },
   { id: 'funcionalidades', label: 'Funcionalidades' },
   { id: 'demonstracao', label: 'Demonstração' },
 ] as const

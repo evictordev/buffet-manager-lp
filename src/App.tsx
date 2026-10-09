@@ -1,4 +1,3 @@
-import { BenefitsSection } from './components/BenefitsSection'
 import { DifferentialsSection } from './components/DifferentialsSection'
 import { FeaturesSection } from './components/FeaturesSection'
 import { FinalCTASection } from './components/FinalCTASection'
@@ -19,7 +18,6 @@ export default function App() {
       <Header />
       <main id="conteudo">
         <HeroSection />
-        <BenefitsSection />
         <FeaturesSection />
         <ProductDemoSection />
         <DifferentialsSection />
