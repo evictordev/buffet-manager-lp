@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/bricolage-grotesque";
+
+/*
+ * TOKENS DE DESIGN — identidade do sistema Buffet Manager (tema escuro).
+ * Fundo navy ("ink"), textos em tons de névoa ("mist") e cores de destaque
+ * do sistema (fuchsia, indigo, emerald, amber) usadas via paleta padrão do Tailwind.
+ * Valores estimados a partir das capturas de tela; ajuste aqui se o sistema usar hex exatos.
+ */
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", "Inter Variable", ui-sans-serif, sans-serif;
+
+  --color-ink-950: #03031a;
+  --color-ink-900: #07071f;
+  --color-ink-800: #0e0f29;
+  --color-ink-700: #171839;
+  --color-ink-600: #23254d;
+  --color-ink-500: #343766;
+
+  --color-mist-100: #eef0ff;
+  --color-mist-300: #c3c7e6;
+  --color-mist-400: #9ba0c8;
+  --color-mist-500: #7e84b0;
+
+  --shadow-soft: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 30px -18px rgb(0 0 0 / 0.7);
+  --shadow-float: 0 24px 50px -24px rgb(0 0 0 / 0.75);
+  --shadow-device: 0 50px 100px -50px rgb(168 85 247 / 0.35), 0 30px 60px -30px rgb(0 0 0 / 0.8);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    color-scheme: dark;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    @apply bg-ink-950 font-sans text-mist-300 antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-white;
+    letter-spacing: -0.02em;
+  }
+
+  section[id],
+  article[id] {
+    scroll-margin-top: 5rem;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-violet-300;
+  }
+
+  ::selection {
+    @apply bg-fuchsia-600/40 text-white;
+  }
+}
