@@ -1,16 +1,18 @@
 import { useLayoutEffect, useRef, type RefObject } from 'react'
 import { ArrowRight, Banknote, CalendarDays, FileText, PlayCircle, Users, type LucideIcon } from 'lucide-react'
 import { gsap } from '../lib/gsap'
-import { TILE, type Tone } from '../lib/tones'
 import { useGsapScope } from '../hooks/useGsapScope'
 import { BuffetScene } from './three/BuffetScene'
 import { Button } from './ui/Button'
+import { HeroCard } from './ui/HeroCard'
+import { TextType } from './ui/TextType'
 
-const CHIPS: { icon: LucideIcon; tone: Tone; title: string; caption: string; position: string }[] = [
-  { icon: CalendarDays, tone: 'fuchsia', title: 'Eventos', caption: 'Organize e acompanhe', position: 'left-0 top-[10%] sm:-left-4' },
-  { icon: FileText, tone: 'indigo', title: 'Orçamentos', caption: 'Propostas comerciais', position: 'right-0 top-[2%] sm:-right-3' },
-  { icon: Banknote, tone: 'emerald', title: 'Folha de pagamento', caption: 'Dados dos profissionais', position: 'right-0 bottom-[18%] sm:-right-5' },
-  { icon: Users, tone: 'amber', title: 'Profissionais', caption: 'Equipe centralizada', position: 'left-0 bottom-[6%] sm:-left-2' },
+// Posições (≥ sm) em quatro cantos, deixando o centro livre para a peça 3D.
+const CHIPS: { icon: LucideIcon; title: string; caption: string; position: string }[] = [
+  { icon: CalendarDays, title: 'Eventos', caption: 'Organize e acompanhe', position: 'sm:left-0 sm:top-[8%]' },
+  { icon: FileText, title: 'Orçamentos', caption: 'Propostas comerciais', position: 'sm:right-0 sm:top-[8%]' },
+  { icon: Users, title: 'Profissionais', caption: 'Equipe centralizada', position: 'sm:left-0 sm:bottom-[8%]' },
+  { icon: Banknote, title: 'Folha de pagamento', caption: 'Dados dos profissionais', position: 'sm:right-0 sm:bottom-[8%]' },
 ]
 
 export function HeroSection() {
@@ -25,8 +27,8 @@ export function HeroSection() {
 
       chips.forEach((chip, i) => {
         gsap.to(chip, {
-          y: i % 2 === 0 ? -10 : 10,
-          duration: 2.6 + i * 0.35,
+          y: i % 2 === 0 ? -4 : 4,
+          duration: 3.6 + i * 0.5,
           ease: 'sine.inOut',
           repeat: -1,
           yoyo: true,
@@ -64,19 +66,15 @@ export function HeroSection() {
 
       <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1.15fr] lg:gap-10">
         <div className="max-w-xl">
-          <p
-            data-hero-text
-            className="inline-flex items-center gap-2 rounded-full border border-ink-500 bg-ink-800 px-3.5 py-1.5 text-sm font-medium text-mist-300"
-          >
-            <span className="size-1.5 rounded-full bg-emerald-400" aria-hidden="true" />
-            Sistema de gestão para buffets de eventos
-          </p>
           <h1
             id="hero-title"
             data-hero-text
-            className="mt-6 text-4xl font-semibold leading-[1.08] text-balance sm:text-5xl lg:text-[3.5rem]"
+            className="text-4xl font-semibold leading-[1.08] text-balance sm:text-5xl lg:text-[3.5rem]"
           >
-            Seu buffet merece uma gestão à altura dos seus eventos.
+            <span className="sr-only">Seu buffet merece uma gestão à altura dos seus eventos.</span>
+            <span aria-hidden="true">
+              Seu buffet merece uma gestão à altura dos seus <TextType words={['eventos.', 'orçamentos.', 'clientes.']} />
+            </span>
           </h1>
           <p data-hero-text className="mt-6 text-lg leading-relaxed text-mist-400">
             Gerencie eventos, orçamentos, contratos, profissionais e clientes em um só lugar. Simplifique sua rotina e
@@ -99,21 +97,14 @@ export function HeroSection() {
             <BuffetScene />
           </div>
 
-          {CHIPS.map(({ icon: Icon, tone, title, caption, position }) => (
-            <div
-              key={title}
-              data-hero-chip
-              className={`absolute hidden items-center gap-3 rounded-xl border border-ink-500 bg-ink-800/90 px-3.5 py-2.5 shadow-float backdrop-blur sm:flex ${position}`}
-            >
-              <span className={`flex size-9 items-center justify-center rounded-lg text-white ${TILE[tone]}`} aria-hidden="true">
-                <Icon className="size-[18px]" />
-              </span>
-              <span className="leading-tight">
-                <span className="block text-sm font-semibold text-white">{title}</span>
-                <span className="block text-xs text-mist-400">{caption}</span>
-              </span>
-            </div>
-          ))}
+          {/* Mobile: grade 2×2 abaixo da cena. ≥ sm: cards ao redor da peça 3D. */}
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:contents">
+            {CHIPS.map(({ icon, title, caption, position }) => (
+              <div key={title} data-hero-chip className={`min-w-0 sm:absolute ${position}`}>
+                <HeroCard icon={icon} title={title} caption={caption} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

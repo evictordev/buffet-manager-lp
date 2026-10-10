@@ -1,4 +1,3 @@
-import { DifferentialsSection } from './components/DifferentialsSection'
 import { FeaturesSection } from './components/FeaturesSection'
 import { FinalCTASection } from './components/FinalCTASection'
 import { Footer } from './components/Footer'
@@ -20,7 +19,6 @@ export default function App() {
         <HeroSection />
         <FeaturesSection />
         <ProductDemoSection />
-        <DifferentialsSection />
         <FinalCTASection />
       </main>
       <Footer />

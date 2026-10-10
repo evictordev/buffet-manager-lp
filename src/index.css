@@ -29,6 +29,108 @@
   --shadow-device: 0 50px 100px -50px rgb(168 85 247 / 0.35), 0 30px 60px -30px rgb(0 0 0 / 0.8);
 }
 
+/* Cards do hero: sombra suave e elevação mínima no hover (a flutuação fica no wrapper, via GSAP). */
+.hero-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgb(14 16 40 / 0.62), rgb(5 7 22 / 0.78));
+  backdrop-filter: blur(16px);
+  box-shadow: 0 18px 36px -20px rgb(0 0 0 / 0.9);
+  transition: transform 0.4s ease;
+}
+
+/* Fio de luz: borda em degradê (clara no topo, some embaixo) com reflexo lilás */
+.hero-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: linear-gradient(165deg, rgb(221 214 254 / 0.38), rgb(255 255 255 / 0.07) 40%, rgb(255 255 255 / 0.03));
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box xor, linear-gradient(#000 0 0);
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* Brilho lilás que acompanha o ponteiro */
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(150px circle at var(--mx, 50%) var(--my, 50%), rgb(167 139 250 / 0.14), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .hero-card:hover::before {
+    opacity: 1;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .hero-card:hover {
+    transform: translateY(-1px);
+  }
+}
+
+@keyframes text-type-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.text-type-cursor {
+  animation: text-type-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-type-cursor {
+    animation: none;
+  }
+}
+
+/*
+ * Carrossel de blocos: os componentes do slide que sai (texto, foto, foto) saem um de cada vez,
+ * e só então os do próximo slide entram. --i define a ordem de cada componente.
+ */
+.carousel-slide [data-carousel-item] {
+  transition:
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease;
+  transition-delay: calc(var(--i, 0) * 140ms);
+}
+
+.carousel-slide[data-state='before'] [data-carousel-item] {
+  opacity: 0;
+  transform: translateX(-56px);
+}
+
+.carousel-slide[data-state='after'] [data-carousel-item] {
+  opacity: 0;
+  transform: translateX(56px);
+}
+
+.carousel-slide[data-state='active'] [data-carousel-item] {
+  opacity: 1;
+  transform: none;
+  transition-delay: calc(650ms + var(--i, 0) * 140ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-slide [data-carousel-item],
+  .carousel-slide[data-state='active'] [data-carousel-item] {
+    transition: none;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

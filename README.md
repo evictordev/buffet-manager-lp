@@ -31,7 +31,7 @@ Se algum arquivo faltar, a página mostra um espaço reservado neutro.
 ```
 src/
   components/   Header, HeroSection, FeaturesSection, FeatureShowcase,
-                ProductDemoSection, DifferentialsSection, FinalCTASection, Footer, ui/
+                ProductDemoSection, FinalCTASection, Footer, ui/
   data/content.ts   textos e recursos (baseados nas funcionalidades reais)
   config/site.ts    nome, contato, navegação, caminho das capturas
   hooks/useGsapScope.ts   escopo GSAP com matchMedia e limpeza automática

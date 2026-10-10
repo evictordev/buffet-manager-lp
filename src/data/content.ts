@@ -1,21 +1,10 @@
 import {
   BadgeCheck,
   Banknote,
-  Blocks,
   CalendarClock,
   CalendarDays,
-  ChartPie,
-  ClipboardCheck,
-  FileSignature,
-  FileText,
-  Layers,
-  LayoutDashboard,
   ListChecks,
   ListOrdered,
-  Package,
-  PanelsTopLeft,
-  PlusCircle,
-  SearchCheck,
   Users,
   type LucideIcon,
 } from 'lucide-react'
@@ -38,6 +27,8 @@ export type FeatureGroup = {
   secondaryShot?: ShotRef
   /** Capturas menores exibidas abaixo do bloco (grupo em destaque). */
   gallery?: ShotRef[]
+  /** Vídeo exibido como último slide; com ele, as capturas viram um carrossel. */
+  video?: { src: string; alt: string; label: string }
   highlight?: boolean
 }
 
@@ -45,32 +36,21 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
   {
     id: 'dashboard',
     eyebrow: 'Dashboard',
-    title: 'Um painel central para começar o dia',
+    title: 'Tenha uma visão completa do seu buffet e acompanhe tudo o que acontece em uma só tela',
     description:
       'O dashboard é o ponto de partida da operação: reúne as informações relevantes do buffet em uma única tela, para você acompanhar o que importa sem abrir vários controles.',
     tone: 'indigo',
-    items: [
-      {
-        icon: LayoutDashboard,
-        title: 'Indicadores principais',
-        text: 'Próximos eventos, usuários ativos e receita acumulada logo no topo.',
-      },
-      {
-        icon: CalendarDays,
-        title: 'Calendário de eventos',
-        text: 'Visualize os próximos eventos do mês e a lista dos mais próximos.',
-      },
-      {
-        icon: ChartPie,
-        title: 'Utensílios e perdas',
-        text: 'Acompanhe enviados, devolvidos e perdidos no período selecionado.',
-      },
-    ],
+    items: [],
     shot: { name: 'dashboard', alt: 'Dashboard do Buffet Manager com indicadores e calendário de eventos', label: 'Dashboard' },
     secondaryShot: {
       name: 'dashboard-utensilios',
       alt: 'Painel de utensílios e perdas no dashboard do Buffet Manager',
       label: 'Utensílios e perdas',
+    },
+    video: {
+      src: 'videos/dashboard.mp4',
+      alt: 'Vídeo do dashboard do Buffet Manager em funcionamento',
+      label: 'Dashboard em uso',
     },
   },
   {
@@ -81,38 +61,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
       'Do primeiro contato com o cliente até o dia da festa, acompanhe tudo em um mesmo fluxo. Menos papéis e mensagens soltas, mais clareza sobre o que já foi combinado e o que ainda falta.',
     tone: 'fuchsia',
     highlight: true,
-    items: [
-      {
-        icon: CalendarDays,
-        title: 'Gestão de Eventos',
-        text: 'Organize e acompanhe os eventos do buffet.',
-      },
-      {
-        icon: FileText,
-        title: 'Orçamentos',
-        text: 'Elabore e acompanhe propostas comerciais.',
-      },
-      {
-        icon: FileSignature,
-        title: 'Contratos',
-        text: 'Centralize os contratos relacionados a cada evento.',
-      },
-      {
-        icon: ClipboardCheck,
-        title: 'Conferência',
-        text: 'Acompanhe e confira os itens e detalhes dos eventos.',
-      },
-      {
-        icon: PlusCircle,
-        title: 'Serviços Extras',
-        text: 'Gerencie os serviços adicionais contratados.',
-      },
-      {
-        icon: Package,
-        title: 'Pacotes de Eventos',
-        text: 'Organize os pacotes oferecidos pelo buffet.',
-      },
-    ],
+    items: [],
     shot: { name: 'eventos', alt: 'Tela de gestão de eventos do Buffet Manager', label: 'Gestão de eventos' },
     gallery: [
       { name: 'orcamentos', alt: 'Lista de orçamentos do Buffet Manager', label: 'Orçamentos' },
@@ -203,32 +152,4 @@ export const DEMO_SCREENS: ShotRef[] = [
   { name: 'folha-pagamento', alt: 'Folha de pagamento no Buffet Manager', label: 'Folha de pagamento' },
   { name: 'utensilios', alt: 'Gestão de utensílios no Buffet Manager', label: 'Utensílios' },
   { name: 'dashboard-utensilios', alt: 'Utensílios e perdas no dashboard do Buffet Manager', label: 'Utensílios e perdas' },
-]
-
-export const DIFFERENTIALS: FeatureItem[] = [
-  {
-    icon: Layers,
-    title: 'Informações centralizadas',
-    text: 'Dados de eventos, clientes e equipe reunidos, sem depender de várias fontes.',
-  },
-  {
-    icon: ListOrdered,
-    title: 'Organização das etapas de cada evento',
-    text: 'Do orçamento ao contrato e à conferência, cada etapa tem seu lugar.',
-  },
-  {
-    icon: Blocks,
-    title: 'Gestão integrada de diferentes áreas',
-    text: 'Eventos, profissionais, utensílios e clientes no mesmo sistema.',
-  },
-  {
-    icon: PanelsTopLeft,
-    title: 'Interface pensada para a rotina administrativa',
-    text: 'Telas desenvolvidas para facilitar o trabalho de quem administra o buffet.',
-  },
-  {
-    icon: SearchCheck,
-    title: 'Acesso prático às informações',
-    text: 'Encontre o que a operação precisa com menos esforço.',
-  },
 ]

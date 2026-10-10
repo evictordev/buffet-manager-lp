@@ -25,11 +25,6 @@ export function Footer() {
                 </a>
               </li>
             ))}
-            <li>
-              <a href="#diferenciais" className={linkClass}>
-                Diferenciais
-              </a>
-            </li>
           </ul>
         </nav>
 

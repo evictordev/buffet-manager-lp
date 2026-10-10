@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
-import { Menu, X } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { ChevronDown, Menu, X } from 'lucide-react'
 import { CONTACT_HREF, NAV_LINKS } from '../config/site'
+import { FEATURE_GROUPS } from '../data/content'
 import { gsap, ScrollTrigger } from '../lib/gsap'
 import { Button } from './ui/Button'
 import { Logo } from './ui/Logo'
@@ -9,6 +10,23 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState<string | null>(null)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Dropdown de funcionalidades: fecha com Esc e ao clicar fora
+  useEffect(() => {
+    if (!menuOpen) return
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenuOpen(false)
+    const onClick = (e: MouseEvent) => {
+      if (!dropdownRef.current?.contains(e.target as Node)) setMenuOpen(false)
+    }
+    document.addEventListener('keydown', onKey)
+    document.addEventListener('mousedown', onClick)
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.removeEventListener('mousedown', onClick)
+    }
+  }, [menuOpen])
 
   // Fundo do cabeçalho muda após rolar um pouco
   useEffect(() => {
@@ -64,18 +82,73 @@ export function Header() {
         </a>
 
         <nav aria-label="Principal" className="hidden items-center gap-1 md:flex">
-          {NAV_LINKS.map(({ id, label }) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              aria-current={active === id ? 'true' : undefined}
-              className={`rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
-                active === id ? 'bg-ink-700 text-white' : 'text-mist-400 hover:text-white'
-              }`}
-            >
-              {label}
-            </a>
-          ))}
+          {NAV_LINKS.map(({ id, label }) => {
+            const linkClass = `rounded-lg px-3.5 py-2 text-sm font-medium transition-colors ${
+              active === id ? 'bg-ink-700 text-white' : 'text-mist-400 hover:text-white'
+            }`
+
+            if (id !== 'funcionalidades') {
+              return (
+                <a key={id} href={`#${id}`} aria-current={active === id ? 'true' : undefined} className={linkClass}>
+                  {label}
+                </a>
+              )
+            }
+
+            return (
+              <div
+                key={id}
+                ref={dropdownRef}
+                className={`group relative flex items-center rounded-lg transition-colors ${active === id ? 'bg-ink-700' : ''}`}
+                onMouseEnter={() => setMenuOpen(true)}
+                onMouseLeave={() => setMenuOpen(false)}
+              >
+                <a href={`#${id}`} aria-current={active === id ? 'true' : undefined} className={`rounded-lg py-2 pl-3.5 pr-1.5 text-sm font-medium transition-colors group-hover:text-white ${
+                    active === id ? 'text-white' : 'text-mist-400'
+                  }`}
+                >
+                  {label}
+                </a>
+                <button
+                  type="button"
+                  aria-expanded={menuOpen}
+                  aria-controls="menu-funcionalidades"
+                  aria-label="Categorias de funcionalidades"
+                  onClick={() => setMenuOpen((v) => !v)}
+                  className={`mr-1.5 rounded-lg p-1.5 transition-colors group-hover:text-white ${
+                    active === id ? 'text-white' : 'text-mist-400'
+                  }`}
+                >
+                  <ChevronDown
+                    className={`size-4 transition-transform duration-200 ${menuOpen ? 'rotate-180' : ''}`}
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
+                </button>
+
+                {menuOpen ? (
+                  <div className="absolute left-0 top-full z-50 w-60 pt-2">
+                    <ul
+                      id="menu-funcionalidades"
+                      className="rounded-xl border border-white/10 bg-[#070a1c]/95 p-1.5 shadow-[0_18px_36px_-16px_rgb(0_0_0/0.85)] backdrop-blur-md"
+                    >
+                      {FEATURE_GROUPS.map((group) => (
+                        <li key={group.id}>
+                          <a
+                            href={`#${group.id}`}
+                            onClick={() => setMenuOpen(false)}
+                            className="block rounded-lg px-3 py-2 text-sm text-mist-300 transition-colors hover:bg-ink-700 hover:text-white"
+                          >
+                            {group.eyebrow}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -111,6 +184,21 @@ export function Header() {
                 >
                   {label}
                 </a>
+                {id === 'funcionalidades' ? (
+                  <ul className="mb-1 ml-3 border-l border-ink-600 pl-3">
+                    {FEATURE_GROUPS.map((group) => (
+                      <li key={group.id}>
+                        <a
+                          href={`#${group.id}`}
+                          onClick={() => setOpen(false)}
+                          className="block rounded-lg px-3 py-2.5 text-sm text-mist-300 hover:bg-ink-700 hover:text-white"
+                        >
+                          {group.eyebrow}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : null}
               </li>
             ))}
           </ul>
