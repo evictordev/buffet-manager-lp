@@ -150,6 +150,24 @@
   }
 }
 
+/* Título que acompanha a imagem: entra deslizando quando a imagem muda de posição. */
+.flow-title-in {
+  animation: flow-title-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes flow-title-in {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-title-in {
+    animation: none;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

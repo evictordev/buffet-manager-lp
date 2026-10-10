@@ -30,6 +30,8 @@ export type FeatureGroup = {
   /** Vídeo exibido como último slide; com ele, as capturas viram um carrossel. */
   /** Botão de chamada para ação exibido sob a descrição do bloco. */
   cta?: { label: string }
+  /** Troca a galeria pela animação de cards (a galeria vira as categorias). */
+  flow?: boolean
   video?: { src: string; alt: string; label: string }
   highlight?: boolean
 }
@@ -68,6 +70,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
       'Do primeiro contato com o cliente até o dia da festa, acompanhe tudo em um mesmo fluxo. Menos papéis e mensagens soltas, mais clareza sobre o que já foi combinado e o que ainda falta.',
     tone: 'fuchsia',
     highlight: true,
+    flow: true,
     items: [],
     shot: { name: 'eventos', alt: 'Tela de gestão de eventos do Buffet Manager', label: 'Gestão de eventos' },
     gallery: [

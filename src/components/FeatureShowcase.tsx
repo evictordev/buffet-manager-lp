@@ -1,4 +1,4 @@
-import { useRef, type CSSProperties } from 'react'
+import { useRef, useState, type CSSProperties } from 'react'
 import type { FeatureGroup } from '../data/content'
 import { ArrowRight } from 'lucide-react'
 import { CONTACT_HREF } from '../config/site'
@@ -6,6 +6,9 @@ import { gsap } from '../lib/gsap'
 import { Button } from './ui/Button'
 import { TILE } from '../lib/tones'
 import { useGsapScope } from '../hooks/useGsapScope'
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { EventFlow } from './ui/EventFlow'
+import { FlowMainFrame } from './ui/FlowMainFrame'
 import { MediaCarousel, VideoSlide } from './ui/MediaCarousel'
 import { ScreenshotFrame } from './ui/ScreenshotFrame'
 
@@ -14,7 +17,7 @@ type Props = { group: FeatureGroup; reverse?: boolean }
 /** Bloco de uma categoria de funcionalidades: texto, recursos e capturas de tela correspondentes. */
 export function FeatureShowcase({ group, reverse = false }: Props) {
   const ref = useRef<HTMLElement>(null)
-  const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, cta, highlight, tone } = group
+  const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, cta, flow, highlight, tone } = group
 
   useGsapScope(ref, {
     full: (root) => {
@@ -68,12 +71,28 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
     </div>
   )
 
+  const flowCategories = flow && gallery && gallery.length > 0 ? gallery : null
+
+  // Imagens do bloco animado: a principal primeiro, depois as da fileira de baixo
+  const flowImages = flowCategories && shot ? [shot, ...flowCategories] : null
+  const [mainIdx, setMainIdx] = useState(0)
+  const mainScreenRef = useRef<HTMLDivElement>(null)
+  const reduced = usePrefersReducedMotion()
+
   const visualCol = shot ? (
     <div data-reveal={reverse ? 'left' : 'right'} className={secondaryShot ? 'pb-14 sm:pb-24' : ''}>
       <div className="relative">
         <div data-carousel-item style={{ '--i': 1 } as CSSProperties} className={secondaryShot ? 'w-[88%]' : ''}>
-          <div data-parallax>
-            <ScreenshotFrame variant="browser" name={shot.name} alt={shot.alt} label={shot.label} />
+          <div {...(flowImages ? {} : { 'data-parallax': '' })}>
+            {flowImages ? (
+              <FlowMainFrame
+                label={flowImages[mainIdx].label}
+                screenRef={mainScreenRef}
+                staticImage={reduced ? shot : null}
+              />
+            ) : (
+              <ScreenshotFrame variant="browser" name={shot.name} alt={shot.alt} label={shot.label} />
+            )}
           </div>
         </div>
         {secondaryShot ? (
@@ -124,7 +143,13 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
         <div className="mx-auto max-w-4xl">{textCol}</div>
       )}
 
-      {gallery && gallery.length > 0 ? (
+      {flowCategories ? (
+        <div className="mt-14 border-t border-ink-600 pt-4 sm:pt-6">
+          {flowImages ? (
+            <EventFlow images={flowImages} mainScreenRef={mainScreenRef} onMain={setMainIdx} reduced={reduced} />
+          ) : null}
+        </div>
+      ) : gallery && gallery.length > 0 ? (
         <div className="mt-14 border-t border-ink-600 pt-10">
           <ul data-stagger className="grid gap-8 md:grid-cols-3">
             {gallery.map((g) => (
