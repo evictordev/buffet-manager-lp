@@ -28,6 +28,8 @@ export type FeatureGroup = {
   /** Capturas menores exibidas abaixo do bloco (grupo em destaque). */
   gallery?: ShotRef[]
   /** Vídeo exibido como último slide; com ele, as capturas viram um carrossel. */
+  /** Botão de chamada para ação exibido sob a descrição do bloco. */
+  cta?: { label: string }
   video?: { src: string; alt: string; label: string }
   highlight?: boolean
 }
@@ -41,12 +43,17 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
       'O dashboard é o ponto de partida da operação: reúne as informações relevantes do buffet em uma única tela, para você acompanhar o que importa sem abrir vários controles.',
     tone: 'indigo',
     items: [],
-    shot: { name: 'dashboard', alt: 'Dashboard do Buffet Manager com indicadores e calendário de eventos', label: 'Dashboard' },
-    secondaryShot: {
+    shot: {
       name: 'dashboard-utensilios',
       alt: 'Painel de utensílios e perdas no dashboard do Buffet Manager',
       label: 'Utensílios e perdas',
     },
+    secondaryShot: {
+      name: 'dashboard',
+      alt: 'Dashboard do Buffet Manager com indicadores e calendário de eventos',
+      label: 'Dashboard',
+    },
+    cta: { label: 'Teste grátis por 1 mês' },
     video: {
       src: 'videos/dashboard.mp4',
       alt: 'Vídeo do dashboard do Buffet Manager em funcionamento',

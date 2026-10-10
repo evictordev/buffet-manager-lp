@@ -1,22 +1,25 @@
 import type { ReactNode } from 'react'
 
 type Props = {
-  eyebrow: string
-  title: ReactNode
+  title: string
+  subtitle?: ReactNode
   description?: ReactNode
   align?: 'left' | 'center'
   id?: string
 }
 
-export function SectionHeading({ eyebrow, title, description, align = 'center', id }: Props) {
+/** Cabeçalho de seção em três níveis: título, subtítulo e descrição. */
+export function SectionHeading({ title, subtitle, description, align = 'center', id }: Props) {
   const center = align === 'center'
   return (
     <div className={`max-w-2xl ${center ? 'mx-auto text-center' : ''}`} data-reveal>
-      <p className="text-sm font-semibold uppercase tracking-wider text-violet-300">{eyebrow}</p>
-      <h2 id={id} className="mt-3 text-3xl font-semibold leading-tight text-balance sm:text-4xl">
+      <h2 id={id} className="text-4xl font-semibold leading-tight sm:text-[2.75rem]">
         {title}
       </h2>
-      {description ? <p className="mt-4 text-lg leading-relaxed text-mist-400">{description}</p> : null}
+      {subtitle ? (
+        <p className="mt-3 text-xl font-medium leading-snug text-balance text-mist-100 sm:text-2xl">{subtitle}</p>
+      ) : null}
+      {description ? <p className="mt-4 text-base leading-relaxed text-mist-400 sm:text-lg">{description}</p> : null}
     </div>
   )
 }

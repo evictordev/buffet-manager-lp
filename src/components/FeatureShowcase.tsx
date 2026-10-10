@@ -1,6 +1,9 @@
 import { useRef, type CSSProperties } from 'react'
 import type { FeatureGroup } from '../data/content'
+import { ArrowRight } from 'lucide-react'
+import { CONTACT_HREF } from '../config/site'
 import { gsap } from '../lib/gsap'
+import { Button } from './ui/Button'
 import { TILE } from '../lib/tones'
 import { useGsapScope } from '../hooks/useGsapScope'
 import { MediaCarousel, VideoSlide } from './ui/MediaCarousel'
@@ -11,7 +14,7 @@ type Props = { group: FeatureGroup; reverse?: boolean }
 /** Bloco de uma categoria de funcionalidades: texto, recursos e capturas de tela correspondentes. */
 export function FeatureShowcase({ group, reverse = false }: Props) {
   const ref = useRef<HTMLElement>(null)
-  const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, highlight, tone } = group
+  const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, cta, highlight, tone } = group
 
   useGsapScope(ref, {
     full: (root) => {
@@ -51,9 +54,15 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
   const textCol = (
     <div data-carousel-item style={{ '--i': 0 } as CSSProperties}>
       <div data-reveal>
-        <p className="text-sm font-semibold uppercase tracking-wider text-violet-300">{eyebrow}</p>
-        <h3 className="mt-3 text-2xl font-semibold leading-tight text-balance sm:text-3xl lg:text-[2rem]">{title}</h3>
-        <p className="mt-4 text-lg leading-relaxed text-mist-400">{description}</p>
+        <h3 className="text-4xl font-semibold leading-tight sm:text-[2.75rem]">{eyebrow}</h3>
+        <p className="mt-3 text-xl font-medium leading-snug text-balance text-mist-100 sm:text-2xl">{title}</p>
+        <p className="mt-4 text-base leading-relaxed text-mist-400 sm:text-lg">{description}</p>
+        {cta ? (
+          <Button href={CONTACT_HREF} size="lg" className="mt-8 hover:translate-y-0!">
+            {cta.label}
+            <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
+          </Button>
+        ) : null}
       </div>
       {itemList}
     </div>

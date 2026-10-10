@@ -131,6 +131,25 @@
   }
 }
 
+/* Seta do CTA do dashboard: só se move com o hover (vai e volta enquanto o ponteiro está em cima). */
+.group:hover .cta-arrow,
+.group:focus-visible .cta-arrow {
+  animation: cta-arrow 1.1s ease-in-out infinite;
+}
+
+@keyframes cta-arrow {
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .group:hover .cta-arrow,
+  .group:focus-visible .cta-arrow {
+    animation: none;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

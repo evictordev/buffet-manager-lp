@@ -53,7 +53,7 @@ export function HeroSection() {
       id="inicio"
       ref={ref}
       aria-labelledby="hero-title"
-      className="relative overflow-hidden bg-ink-950 pt-28 pb-16 sm:pt-32 lg:pb-24 lg:pt-40"
+      className="relative flex min-h-svh items-center overflow-hidden bg-ink-950 pt-28 pb-16 sm:pt-32 lg:pb-16 lg:pt-28"
     >
       <div
         className="pointer-events-none absolute -left-40 top-0 size-[34rem] rounded-full bg-fuchsia-700/20 blur-[120px]"
@@ -64,12 +64,12 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1.15fr] lg:gap-10">
+      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1.15fr] lg:gap-10">
         <div className="max-w-xl">
           <h1
             id="hero-title"
             data-hero-text
-            className="text-4xl font-semibold leading-[1.08] text-balance sm:text-5xl lg:text-[3.5rem]"
+            className="text-5xl font-semibold leading-[1.08] text-balance sm:text-6xl lg:text-7xl"
           >
             <span className="sr-only">Seu buffet merece uma gestão à altura dos seus eventos.</span>
             <span aria-hidden="true">

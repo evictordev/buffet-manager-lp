@@ -63,8 +63,8 @@ export function ProductDemoSection() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
           id="demo-title"
-          eyebrow="Demonstração"
-          title="Veja o Buffet Manager em uso"
+          title="Demonstração"
+          subtitle="Veja o Buffet Manager em uso"
           description="Navegue pelos módulos e entenda como o sistema organiza a rotina antes de entrar em contato."
         />
 
