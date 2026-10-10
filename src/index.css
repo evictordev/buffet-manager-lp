@@ -168,6 +168,24 @@
   }
 }
 
+/* Card novo da lista animada: surge do topo, pequeno e transparente. */
+.animated-list-in {
+  animation: animated-list-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes animated-list-in {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-list-in {
+    animation: none;
+  }
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

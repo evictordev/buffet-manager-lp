@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { ChevronDown, Menu, X } from 'lucide-react'
+import { ArrowRight, ChevronDown, Menu, X } from 'lucide-react'
 import { CONTACT_HREF, NAV_LINKS } from '../config/site'
 import { FEATURE_GROUPS } from '../data/content'
 import { gsap, ScrollTrigger } from '../lib/gsap'
@@ -152,8 +152,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button href={CONTACT_HREF} className="hidden sm:inline-flex">
-            Conhecer o sistema
+          <Button href={CONTACT_HREF} className="hidden hover:translate-y-0! sm:inline-flex">
+            Teste 1 mês grátis
+            <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
           </Button>
           <button
             type="button"
@@ -202,8 +203,9 @@ export function Header() {
               </li>
             ))}
           </ul>
-          <Button href={CONTACT_HREF} size="lg" className="mt-3 w-full" onClick={() => setOpen(false)}>
-            Conhecer o sistema
+          <Button href={CONTACT_HREF} size="lg" className="mt-3 w-full hover:translate-y-0!" onClick={() => setOpen(false)}>
+            Teste 1 mês grátis
+            <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
           </Button>
         </nav>
       ) : null}

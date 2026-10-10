@@ -32,6 +32,10 @@ export type FeatureGroup = {
   cta?: { label: string }
   /** Troca a galeria pela animação de cards (a galeria vira as categorias). */
   flow?: boolean
+  /** Exibe a descrição abaixo da imagem principal, em vez de junto ao título. */
+  descriptionBelowImage?: boolean
+  /** Lista animada de utensílios exibida no lugar da imagem (valores ilustrativos). */
+  utensilList?: { name: string; quantity: string; price: string }[]
   video?: { src: string; alt: string; label: string }
   highlight?: boolean
 }
@@ -82,10 +86,11 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
   {
     id: 'profissionais',
     eyebrow: 'Gestão de profissionais',
-    title: 'Sua equipe organizada em um só lugar',
+    title: 'Cada profissional, cada função, tudo organizado. Mais clareza para a sua equipe e mais organização para você',
     description:
       'Mantenha os dados, as funções e a disponibilidade da equipe à mão para montar cada evento com mais segurança e acompanhar as informações de pagamento.',
     tone: 'violet',
+    descriptionBelowImage: true,
     items: [
       {
         icon: Users,
@@ -117,6 +122,15 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
     description:
       'Cadastre e organize os utensílios usados na operação. Com o catálogo em ordem, fica mais simples saber quais recursos estão disponíveis para cada evento.',
     tone: 'emerald',
+    utensilList: [
+      { name: 'Taças', quantity: '498 un.', price: 'R$ 6,00' },
+      { name: 'Pratos', quantity: '475 un.', price: 'R$ 8,50' },
+      { name: 'Garfos', quantity: '418 un.', price: 'R$ 3,50' },
+      { name: 'Facas', quantity: '404 un.', price: 'R$ 3,50' },
+      { name: 'Panelas de barro', quantity: '40 un.', price: 'R$ 45,00' },
+      { name: 'Tampas de barro', quantity: '24 un.', price: 'R$ 18,00' },
+      { name: 'Rechauds de barro', quantity: '8 un.', price: 'R$ 120,00' },
+    ],
     items: [
       {
         icon: ListChecks,

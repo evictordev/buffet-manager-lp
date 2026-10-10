@@ -4,9 +4,9 @@ import { ArrowRight } from 'lucide-react'
 import { CONTACT_HREF } from '../config/site'
 import { gsap } from '../lib/gsap'
 import { Button } from './ui/Button'
-import { TILE } from '../lib/tones'
 import { useGsapScope } from '../hooks/useGsapScope'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
+import { AnimatedList } from './ui/AnimatedList'
 import { EventFlow } from './ui/EventFlow'
 import { FlowMainFrame } from './ui/FlowMainFrame'
 import { MediaCarousel, VideoSlide } from './ui/MediaCarousel'
@@ -17,7 +17,7 @@ type Props = { group: FeatureGroup; reverse?: boolean }
 /** Bloco de uma categoria de funcionalidades: texto, recursos e capturas de tela correspondentes. */
 export function FeatureShowcase({ group, reverse = false }: Props) {
   const ref = useRef<HTMLElement>(null)
-  const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, cta, flow, highlight, tone } = group
+  const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, cta, flow, descriptionBelowImage, utensilList, highlight } = group
 
   useGsapScope(ref, {
     full: (root) => {
@@ -32,22 +32,20 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
 
   const itemList =
     items.length > 0 ? (
-      <ul data-stagger className={`mt-8 grid gap-3 ${highlight || !shot ? 'sm:grid-cols-2' : ''}`}>
+      <ul data-stagger className={`mt-8 grid gap-x-8 gap-y-5 ${highlight || !shot ? 'sm:grid-cols-2' : ''}`}>
         {items.map(({ icon: Icon, title: itemTitle, text }) => (
-          <li
-            key={itemTitle}
-            data-stagger-item
-            className="flex gap-3.5 rounded-xl border border-ink-600 bg-ink-800 p-4 transition-colors hover:border-violet-400/50"
-          >
-            <span
-              className={`flex size-9 shrink-0 items-center justify-center rounded-lg text-white ${TILE[tone]}`}
+          <li key={itemTitle} data-stagger-item className="flex items-stretch gap-4">
+            <Icon
+              className="size-8 shrink-0 self-center fill-violet-300/30 text-violet-300"
+              strokeWidth={1.5}
               aria-hidden="true"
-            >
-              <Icon className="size-[18px]" />
-            </span>
-            <span>
-              <span className="block font-semibold text-white">{itemTitle}</span>
-              <span className="mt-0.5 block text-sm leading-relaxed text-mist-400">{text}</span>
+            />
+            <span className="flex min-w-0 flex-1 items-stretch">
+              <span className="w-0.5 shrink-0 rounded-full bg-violet-300/60" aria-hidden="true" />
+              <span className="min-w-0 flex-1 rounded-r-lg bg-white/[0.05] px-4 py-3">
+                <span className="block text-lg font-medium text-white">{itemTitle}</span>
+                <span className="mt-0.5 block text-sm leading-relaxed text-mist-400">{text}</span>
+              </span>
             </span>
           </li>
         ))}
@@ -59,7 +57,9 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
       <div data-reveal>
         <h3 className="text-4xl font-semibold leading-tight sm:text-[2.75rem]">{eyebrow}</h3>
         <p className="mt-3 text-xl font-medium leading-snug text-balance text-mist-100 sm:text-2xl">{title}</p>
-        <p className="mt-4 text-base leading-relaxed text-mist-400 sm:text-lg">{description}</p>
+        {descriptionBelowImage && shot ? null : (
+          <p className="mt-4 text-base leading-relaxed text-mist-400 sm:text-lg">{description}</p>
+        )}
         {cta ? (
           <Button href={CONTACT_HREF} size="lg" className="mt-8 hover:translate-y-0!">
             {cta.label}
@@ -83,7 +83,9 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
       <div className="relative">
         <div data-carousel-item style={{ '--i': 1 } as CSSProperties} className={secondaryShot ? 'w-[88%]' : ''}>
           <div {...(flowImages ? {} : { 'data-parallax': '' })}>
-            {flowImages ? (
+            {utensilList ? (
+              <AnimatedList items={utensilList} />
+            ) : flowImages ? (
               <FlowMainFrame
                 label={flowImages[0].label}
                 frameRef={mainFrameRef}
@@ -111,6 +113,11 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
           </div>
         ) : null}
       </div>
+      {descriptionBelowImage ? (
+        <p className="mt-6 border-l-2 border-violet-300/50 pl-4 text-base leading-relaxed text-mist-300 sm:text-lg">
+          {description}
+        </p>
+      ) : null}
     </div>
   ) : null
 
