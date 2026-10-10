@@ -1,4 +1,4 @@
-import { useRef, useState, type CSSProperties } from 'react'
+import { useRef, type CSSProperties } from 'react'
 import type { FeatureGroup } from '../data/content'
 import { ArrowRight } from 'lucide-react'
 import { CONTACT_HREF } from '../config/site'
@@ -75,8 +75,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
 
   // Imagens do bloco animado: a principal primeiro, depois as da fileira de baixo
   const flowImages = flowCategories && shot ? [shot, ...flowCategories] : null
-  const [mainIdx, setMainIdx] = useState(0)
-  const mainScreenRef = useRef<HTMLDivElement>(null)
+  const mainFrameRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
 
   const visualCol = shot ? (
@@ -86,8 +85,8 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
           <div {...(flowImages ? {} : { 'data-parallax': '' })}>
             {flowImages ? (
               <FlowMainFrame
-                label={flowImages[mainIdx].label}
-                screenRef={mainScreenRef}
+                label={flowImages[0].label}
+                frameRef={mainFrameRef}
                 staticImage={reduced ? shot : null}
               />
             ) : (
@@ -146,7 +145,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
       {flowCategories ? (
         <div className="mt-14 border-t border-ink-600 pt-4 sm:pt-6">
           {flowImages ? (
-            <EventFlow images={flowImages} mainScreenRef={mainScreenRef} onMain={setMainIdx} reduced={reduced} />
+            <EventFlow images={flowImages} mainFrameRef={mainFrameRef} reduced={reduced} />
           ) : null}
         </div>
       ) : gallery && gallery.length > 0 ? (

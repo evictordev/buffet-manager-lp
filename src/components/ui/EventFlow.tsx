@@ -25,10 +25,8 @@ const tween = (target: gsap.TweenTarget, vars: gsap.TweenVars) =>
 type Props = {
   /** images[0] é a imagem principal; as demais seguem na ordem da fileira de baixo. */
   images: FlowImage[]
-  /** Área da tela da moldura principal (alvo do card principal). */
-  mainScreenRef: RefObject<HTMLDivElement | null>
-  /** Avisa qual imagem está como principal (para o título da moldura). */
-  onMain?: (index: number) => void
+  /** Moldura da imagem principal (alvo do card principal). */
+  mainFrameRef: RefObject<HTMLDivElement | null>
   reduced: boolean
 }
 
@@ -39,14 +37,12 @@ type Props = {
  * fila sobe e vira a principal, e a principal desce para o fim da fila. Os títulos acompanham
  * as imagens. Com prefers-reduced-motion, mostra o estado final estático.
  */
-export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
+export function EventFlow({ images, mainFrameRef, reduced }: Props) {
   const rootRef = useRef<HTMLDivElement>(null)
   const cardRefs = useRef<(HTMLDivElement | null)[]>([])
   const slotRefs = useRef<(HTMLDivElement | null)[]>([])
   const glowRefs = useRef<(HTMLSpanElement | null)[]>([])
   const visibleRef = useRef(false)
-  const onMainRef = useRef(onMain)
-  onMainRef.current = onMain
 
   const slotCount = images.length - 1
   // Imagens (por índice) em cada posição da fileira, da esquerda para a direita
@@ -69,7 +65,7 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
   useEffect(() => {
     if (reduced) return
     const root = rootRef.current
-    const mainEl = mainScreenRef.current
+    const mainEl = mainFrameRef.current
     if (!root || !mainEl) return
 
     const n = images.length
@@ -91,14 +87,14 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
 
     const mainPose = () => {
       const m = measure(mainEl)
-      return { x: m.x, y: m.y, scale: 1, rotationX: 0, rotationY: 0, opacity: 1, borderRadius: '0px 0px 14px 14px' }
+      return { x: m.x, y: m.y, scale: 1, rotationX: 0, rotationY: 0, opacity: 1, borderRadius: radius(16) }
     }
 
     const slotPose = (k: number) => {
       const m = measure(mainEl)
       const c = measure(slots[k])
       const scale = c.w / m.w
-      return { x: c.x, y: c.y, scale, rotationX: 0, rotationY: 0, opacity: 1, borderRadius: radius(6 / scale) }
+      return { x: c.x, y: c.y, scale, rotationX: 0, rotationY: 0, opacity: 1, borderRadius: radius(8 / scale) }
     }
 
     // Pilha em perspectiva sobre a moldura principal; pos 0 = frente
@@ -112,7 +108,7 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
         rotationX: 12,
         rotationY: -16,
         opacity: 1 - pos * 0.12,
-        borderRadius: radius(10 / scale),
+        borderRadius: radius(16),
       }
     }
 
@@ -147,7 +143,6 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
       mainIdx = 0
       rowIdx = Array.from({ length: slotCount }, (_, k) => k + 1)
       setRow(rowIdx)
-      onMainRef.current?.(0)
       // Pilha: Orçamentos na frente, ..., imagem principal por último
       where = images.map((_, i) => ({ t: 'stack', pos: i === 0 ? n - 1 : i - 1 }))
       glowRefs.current.forEach((g) => g && gsap.set(g, { opacity: 0 }))
@@ -166,61 +161,63 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
       if (g) gsap.fromTo(g, { opacity: 1 }, { opacity: 0, duration: 1.4, ease: 'power2.out' })
     }
 
-    // 1) Introdução: cada imagem vai para o seu lugar
+    // 1) Introdução: cada imagem vai para o seu lugar, em sequência rápida e sobreposta
+    //    (a próxima já sai enquanto a anterior ainda está descendo)
     async function intro(my: number) {
       const alive = () => !cancelled && my === epoch
       // Pilha, frente primeiro: Orçamentos, Contratos, Pacotes e, por último, a imagem principal
       const remaining = [...images.keys()].filter((i) => i > 0).concat(0)
+      const pending: Promise<void>[] = []
 
       for (let img = 1; img < n; img++) {
         if (!(await ready(my))) return
         const el = cards[img]
         const k = img - 1
 
+        // Destaque breve do card da frente
         gsap.set(el, { zIndex: 40 })
-        await tween(el, { scale: stackPose(0).scale * 1.04, boxShadow: SHADOW_LEAD, duration: 0.55, ease: 'power2.out' })
-        if (!alive()) return
-        await wait(200)
+        await tween(el, { scale: stackPose(0).scale * 1.04, boxShadow: SHADOW_LEAD, duration: 0.2, ease: 'power2.out' })
         if (!alive()) return
 
         // Desce, perde a inclinação e desliza até o lugar; a próxima avança para a frente
         const p = slotPose(k)
         remaining.shift()
         where[img] = { t: 'slot', k }
-        const moves: Promise<void>[] = [
-          tween(el, { y: p.y, duration: 1.2, ease: 'power2.inOut' }),
-          tween(el, { x: p.x, duration: 1.1, delay: 0.25, ease: 'power3.out' }),
+        const landing = Promise.all([
+          tween(el, { y: p.y, duration: 0.7, ease: 'power2.inOut' }),
+          tween(el, { x: p.x, duration: 0.65, delay: 0.1, ease: 'power3.out' }),
           tween(el, {
             rotationX: 0,
             rotationY: 0,
             scale: p.scale,
             borderRadius: p.borderRadius,
             boxShadow: SHADOW_REST,
-            duration: 1.25,
+            duration: 0.75,
             ease: 'power2.inOut',
           }),
-        ]
+        ]).then(() => {
+          if (!alive()) return
+          gsap.set(el, { zIndex: 5 })
+          glow(k)
+        })
+        pending.push(landing)
         remaining.forEach((c, pos) => {
           where[c] = { t: 'stack', pos }
           gsap.set(cards[c], { zIndex: 20 - pos })
-          moves.push(tween(cards[c], { ...stackPose(pos), duration: 0.9, delay: 0.25, ease: 'power2.out' }))
+          pending.push(tween(cards[c], { ...stackPose(pos), duration: 0.6, delay: 0.1, ease: 'power2.out' }))
         })
-        await Promise.all(moves)
-        if (!alive()) return
-
-        gsap.set(el, { zIndex: 5 })
-        glow(k)
-        await wait(450)
+        await wait(220)
         if (!alive()) return
       }
 
       // A imagem principal, última da pilha, se alinha na moldura
       where[0] = { t: 'main' }
-      await tween(cards[0], { ...mainPose(), boxShadow: SHADOW_REST, duration: 1.1, ease: 'power2.inOut' })
+      pending.push(tween(cards[0], { ...mainPose(), boxShadow: SHADOW_REST, duration: 0.7, ease: 'power2.inOut', delay: 0.1 }))
+      await Promise.all(pending)
       if (!alive()) return
       gsap.set(cards[0], { zIndex: 5 })
       stage = 'loop'
-      await wait(1600)
+      await wait(1200)
     }
 
     // 2) Carrossel em fileira: a primeira da fila sobe, a principal desce para o fim
@@ -231,9 +228,8 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
       const down = mainIdx
       const nextRow = [...rowIdx.slice(1), down]
 
-      // Títulos e moldura principal mudam junto com o movimento
+      // Os títulos da fileira mudam junto com o movimento
       setRow(nextRow)
-      onMainRef.current?.(up)
 
       gsap.set(cards[up], { zIndex: 40 })
       gsap.set(cards[down], { zIndex: 35 })
@@ -256,7 +252,7 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
     }
 
     async function run() {
-      await wait(700)
+      await wait(150)
       while (!cancelled) {
         const my = epoch
         if (stage === 'intro') await intro(my)
@@ -338,7 +334,7 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
                 ref={(el) => {
                   slotRefs.current[k] = el
                 }}
-                className="relative mt-3 aspect-[16/10] w-full rounded-md border border-dashed border-white/10 sm:mt-4"
+                className="relative mt-3 aspect-[16/11] w-full rounded-md border border-dashed border-white/10 sm:mt-4"
               >
                 {reduced ? <CardFace image={img} small /> : null}
               </div>
@@ -350,20 +346,42 @@ export function EventFlow({ images, mainScreenRef, onMain, reduced }: Props) {
   )
 }
 
+/** Card = imagem dentro do seu próprio molde (moldura de navegador): o molde viaja com a imagem. */
 function CardFace({ image, small = false }: { image: FlowImage; small?: boolean }) {
+  if (small) {
+    return (
+      <div className="h-full w-full overflow-hidden rounded-md border border-white/15 bg-ink-800">
+        <img
+          src={screenshot(image.name)}
+          alt={image.alt}
+          width={1600}
+          height={1000}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover object-top"
+        />
+      </div>
+    )
+  }
   return (
     <div
-      className={`h-full w-full overflow-hidden border border-white/15 bg-ink-800 ${small ? 'rounded-md' : ''}`}
-      style={small ? undefined : { borderRadius: 'inherit' }}
+      className="flex h-full w-full flex-col overflow-hidden border border-ink-500 bg-ink-800"
+      style={{ borderRadius: 'inherit' }}
     >
+      <div className="flex h-[9.0909%] shrink-0 items-center gap-1.5 border-b border-ink-600 bg-ink-700 px-4">
+        <span className="size-2.5 rounded-full bg-ink-500" />
+        <span className="size-2.5 rounded-full bg-ink-500" />
+        <span className="size-2.5 rounded-full bg-ink-500" />
+        <span className="ml-3 whitespace-nowrap text-xs font-medium text-mist-300">{image.label}</span>
+      </div>
       <img
         src={screenshot(image.name)}
-        alt={small ? image.alt : ''}
+        alt=""
         width={1600}
         height={1000}
         loading="lazy"
         decoding="async"
-        className="h-full w-full object-cover object-top"
+        className="min-h-0 w-full flex-1 object-cover object-top"
       />
     </div>
   )
