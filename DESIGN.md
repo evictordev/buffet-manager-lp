@@ -28,6 +28,12 @@ typography:
     fontWeight: 600
     lineHeight: 1.25
     letterSpacing: "-0.02em"
+  headline:
+    fontFamily: "Bricolage Grotesque Variable, Inter Variable, ui-sans-serif, sans-serif"
+    fontSize: "1.75rem"
+    fontWeight: 600
+    lineHeight: 1.25
+    letterSpacing: "-0.02em"
   title:
     fontFamily: "Bricolage Grotesque Variable, Inter Variable, ui-sans-serif, sans-serif"
     fontSize: "1.5rem"
@@ -123,7 +129,8 @@ Navy quase preto como base, névoa lavanda para texto, cores de destaque do sist
 **Character:** Bricolage dá personalidade e calor aos títulos; Inter mantém o texto corrente neutro e legível sobre fundo escuro.
 
 ### Hierarchy
-- **Display** (600, 2.75rem no desktop, 2.25rem no mobile, 1.25): título de seção (h2). Os blocos de funcionalidade usam um h3 de 2.25rem (1.875rem no mobile) com a frase de benefício. Tracking -0.02em.
+- **Display** (600, 2.75rem no desktop, 2.25rem no mobile, 1.25): título de seção (h2).  Tracking -0.02em.
+- **Headline** (600, 2.25rem no desktop, 1.75rem no mobile, 1.25): frase de benefício de cada bloco de funcionalidade (h3). 1.75rem no mobile mantém títulos longos em 3 linhas a partir de 360px.
 - **Title** (500, 1.5rem no desktop, 1.25rem no mobile, 1.375): subtítulo de seção em mist-100.
 - **Body** (400, 1.125rem, 1.625): descrição em mist-400; 1rem no mobile.
 - **Label** (500, 0.875rem): links de navegação, botões e rótulos.

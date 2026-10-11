@@ -73,7 +73,7 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,backdrop-filter] duration-300 ${
-        solid ? 'bg-ink-950/85 shadow-[0_1px_0_0_#171839] backdrop-blur-md' : 'bg-transparent'
+        solid ? 'bg-ink-950/85 shadow-[0_1px_0_0_var(--color-ink-700)] backdrop-blur-md' : 'bg-transparent'
       }`}
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8 lg:h-[72px]">
@@ -100,8 +100,8 @@ export function Header() {
                 key={id}
                 ref={dropdownRef}
                 className={`group relative flex items-center rounded-lg transition-colors ${active === id ? 'bg-ink-700' : ''}`}
-                onMouseEnter={() => setMenuOpen(true)}
-                onMouseLeave={() => setMenuOpen(false)}
+                onPointerEnter={(e) => e.pointerType === 'mouse' && setMenuOpen(true)}
+                onPointerLeave={(e) => e.pointerType === 'mouse' && setMenuOpen(false)}
               >
                 <a href={`#${id}`} aria-current={active === id ? 'true' : undefined} className={`rounded-lg py-2 pl-3.5 pr-1.5 text-sm font-medium transition-colors group-hover:text-white ${
                     active === id ? 'text-white' : 'text-mist-400'
@@ -115,7 +115,7 @@ export function Header() {
                   aria-controls="menu-funcionalidades"
                   aria-label="Categorias de funcionalidades"
                   onClick={() => setMenuOpen((v) => !v)}
-                  className={`mr-1.5 rounded-lg p-1.5 transition-colors group-hover:text-white ${
+                  className={`mr-1 flex size-9 items-center justify-center rounded-lg transition-colors group-hover:text-white ${
                     active === id ? 'text-white' : 'text-mist-400'
                   }`}
                 >
@@ -130,7 +130,7 @@ export function Header() {
                   <div className="absolute left-0 top-full z-50 w-60 pt-2">
                     <ul
                       id="menu-funcionalidades"
-                      className="rounded-xl border border-white/10 bg-[#070a1c]/95 p-1.5 shadow-[0_18px_36px_-16px_rgb(0_0_0/0.85)] backdrop-blur-md"
+                      className="rounded-xl border border-white/10 bg-ink-900/95 p-1.5 shadow-[0_18px_36px_-16px_rgb(0_0_0/0.85)] backdrop-blur-md"
                     >
                       {FEATURE_GROUPS.map((group) => (
                         <li key={group.id}>
@@ -158,7 +158,7 @@ export function Header() {
           </Button>
           <button
             type="button"
-            className="inline-flex size-10 items-center justify-center rounded-lg text-white hover:bg-ink-700 md:hidden"
+            className="inline-flex size-11 items-center justify-center rounded-lg text-white hover:bg-ink-700 md:hidden"
             aria-expanded={open}
             aria-controls="menu-mobile"
             aria-label={open ? 'Fechar menu' : 'Abrir menu'}

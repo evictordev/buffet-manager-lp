@@ -74,7 +74,7 @@ export function AnimatedList({ items, max = 5, interval = 1800, className = '' }
           style={{ transform: `translateY(${index * (CARD_H + GAP)}px)`, opacity: index >= max ? 0 : 1 }}
         >
           <div
-            className="animated-list-in flex items-center gap-3 rounded-xl border border-white/10 bg-[#070a1c]/85 px-4 shadow-[0_14px_28px_-14px_rgb(0_0_0/0.85)] backdrop-blur-md sm:gap-4"
+            className="animated-list-in flex items-center gap-3 rounded-xl border border-white/10 bg-ink-900/85 px-4 shadow-[0_14px_28px_-14px_rgb(0_0_0/0.85)] backdrop-blur-md sm:gap-4"
             style={{ height: CARD_H }}
           >
             <Utensils className="size-5 shrink-0 text-brass-300" strokeWidth={1.5} aria-hidden="true" />

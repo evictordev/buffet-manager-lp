@@ -45,7 +45,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
   const textCol = (
     <div data-carousel-item style={{ '--i': 0 } as CSSProperties}>
       <div data-reveal>
-        <h3 id={`${id}-title`} className="text-3xl font-semibold leading-tight text-balance sm:text-4xl">
+        <h3 id={`${id}-title`} className="text-[1.75rem] font-semibold leading-tight text-balance sm:text-4xl">
           <span className="sr-only">{eyebrow}: </span>
           {title}
         </h3>
@@ -117,9 +117,9 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
     <div
       className={
         highlight
-          ? 'rounded-[2rem] border border-ink-500 bg-gradient-to-b from-ink-800 to-ink-900 p-6 sm:p-10 lg:p-14'
+          ? 'rounded-[2rem] border border-ink-500 bg-gradient-to-b from-ink-800 to-ink-900 p-5 sm:p-10 lg:p-14'
           : !shot
-            ? 'rounded-[2rem] border border-ink-600 bg-ink-800/60 p-6 sm:p-10 lg:p-14'
+            ? 'rounded-[2rem] border border-ink-600 bg-ink-800/60 p-5 sm:p-10 lg:p-14'
             : ''
       }
     >

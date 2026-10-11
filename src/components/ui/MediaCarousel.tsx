@@ -19,12 +19,14 @@ export function MediaCarousel({ slides, ariaLabel }: Props) {
   const go = (i: number) => setActive((i + count) % count)
 
   const onKeyDown = (e: React.KeyboardEvent) => {
+    // As setas dos controles do vídeo (buscar, volume) não trocam de slide
+    if ((e.target as HTMLElement).closest('video')) return
     if (e.key === 'ArrowLeft') go(active - 1)
     if (e.key === 'ArrowRight') go(active + 1)
   }
 
   const arrow =
-    'absolute top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white backdrop-blur transition-colors hover:border-brass-300/50 hover:bg-ink-950/90'
+    'absolute top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white backdrop-blur transition-colors hover:border-brass-300/50 hover:bg-ink-950/90'
 
   return (
     <div role="group" aria-roledescription="carrossel" aria-label={ariaLabel} onKeyDown={onKeyDown} className="relative">
@@ -52,7 +54,7 @@ export function MediaCarousel({ slides, ariaLabel }: Props) {
         <ChevronRight className="size-5" strokeWidth={1.5} aria-hidden="true" />
       </button>
 
-      <div className="mt-8 flex items-center justify-center gap-2">
+      <div className="mt-4 flex items-center justify-center">
         {slides.map((slide, i) => (
           <button
             key={slide.label}
@@ -60,8 +62,13 @@ export function MediaCarousel({ slides, ariaLabel }: Props) {
             onClick={() => go(i)}
             aria-label={`Ir para ${slide.label}`}
             aria-current={i === active}
-            className={`h-2 rounded-full transition-all ${i === active ? 'w-6 bg-brass-300' : 'w-2 bg-ink-500 hover:bg-mist-500'}`}
-          />
+            className="group flex h-11 items-center justify-center px-1.5"
+          >
+            <span
+              aria-hidden="true"
+              className={`h-2 rounded-full transition-all ${i === active ? 'w-6 bg-brass-300' : 'w-2 bg-ink-500 group-hover:bg-mist-500'}`}
+            />
+          </button>
         ))}
       </div>
     </div>
@@ -102,7 +109,8 @@ export function VideoSlide({ src, alt, active }: { src: string; alt: string; act
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
+        poster={`${import.meta.env.BASE_URL}screenshots/dashboard.webp`}
         controls={reduced}
         className="aspect-[16/10] w-full bg-ink-900 object-cover object-top"
       />

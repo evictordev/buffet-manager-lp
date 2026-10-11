@@ -69,7 +69,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
   {
     id: 'eventos',
     eyebrow: 'Gestão de eventos',
-    title: 'Cada etapa do evento, do orçamento à conferência',
+    title: 'Cada etapa do evento, do orçamento à conferência',
     description:
       'Do primeiro contato com o cliente até o dia da festa, acompanhe tudo em um mesmo fluxo. Menos papéis e mensagens soltas, mais clareza sobre o que já foi combinado e o que ainda falta.',
     tone: 'fuchsia',

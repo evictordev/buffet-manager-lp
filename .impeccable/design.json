@@ -66,6 +66,10 @@
       "label": {
         "displayName": "Label",
         "purpose": "Navegação, botões e rótulos."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Frase de benefício de cada bloco de funcionalidade (h3)."
       }
     },
     "shadows": [

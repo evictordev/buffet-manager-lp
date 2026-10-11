@@ -87,7 +87,7 @@ export function ProductDemoSection() {
                 aria-controls="demo-panel"
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(index)}
-                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                className={`min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                   selected
                     ? 'border-white bg-white text-ink-950'
                     : 'border-ink-500 bg-ink-800 text-mist-300 hover:border-brass-400/50 hover:bg-ink-700 hover:text-white'
