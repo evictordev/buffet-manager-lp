@@ -11,7 +11,7 @@ type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
 const variants: Record<Variant, string> = {
   // Igual ao botão principal do sistema: fundo branco, texto escuro
   primary: 'bg-white text-ink-950 shadow-soft hover:bg-mist-100',
-  secondary: 'border border-ink-500 bg-ink-800/70 text-white hover:border-violet-400/60 hover:bg-ink-700',
+  secondary: 'border border-ink-500 bg-ink-800/70 text-white hover:border-brass-400/50 hover:bg-ink-700',
 }
 
 const sizes = {
@@ -30,6 +30,7 @@ export function Button({ variant = 'primary', size = 'md', className = '', href,
       {...rest}
     >
       {children}
+      {external ? <span className="sr-only"> (abre em nova aba)</span> : null}
     </a>
   )
 }

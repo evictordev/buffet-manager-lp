@@ -152,9 +152,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button href={CONTACT_HREF} className="hidden hover:translate-y-0! sm:inline-flex">
-            Teste 1 mês grátis
-            <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
+          <Button href={CONTACT_HREF} className="px-3 hover:translate-y-0! sm:px-4">
+            Teste grátis<span className="hidden sm:inline"> por 1 mês</span>
+            <ArrowRight className="cta-arrow hidden size-4 min-[400px]:block" aria-hidden="true" />
           </Button>
           <button
             type="button"
@@ -204,7 +204,7 @@ export function Header() {
             ))}
           </ul>
           <Button href={CONTACT_HREF} size="lg" className="mt-3 w-full hover:translate-y-0!" onClick={() => setOpen(false)}>
-            Teste 1 mês grátis
+            Teste grátis por 1 mês
             <ArrowRight className="cta-arrow size-4" aria-hidden="true" />
           </Button>
         </nav>

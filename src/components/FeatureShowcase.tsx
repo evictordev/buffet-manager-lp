@@ -2,7 +2,6 @@ import { useRef, type CSSProperties } from 'react'
 import type { FeatureGroup } from '../data/content'
 import { ArrowRight } from 'lucide-react'
 import { CONTACT_HREF } from '../config/site'
-import { gsap } from '../lib/gsap'
 import { Button } from './ui/Button'
 import { useGsapScope } from '../hooks/useGsapScope'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
@@ -19,16 +18,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
   const ref = useRef<HTMLElement>(null)
   const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, cta, flow, descriptionBelowImage, utensilList, highlight } = group
 
-  useGsapScope(ref, {
-    full: (root) => {
-      // Parallax leve: captura principal sobe e a secundária desce, criando profundidade
-      const main = root.querySelector('[data-parallax]')
-      const second = root.querySelector('[data-parallax-alt]')
-      const trigger = { trigger: root, start: 'top bottom', end: 'bottom top', scrub: 0.6 }
-      if (main) gsap.fromTo(main, { yPercent: 3 }, { yPercent: -3, ease: 'none', scrollTrigger: trigger })
-      if (second) gsap.fromTo(second, { yPercent: -4 }, { yPercent: 6, ease: 'none', scrollTrigger: trigger })
-    },
-  })
+  useGsapScope(ref)
 
   const itemList =
     items.length > 0 ? (
@@ -36,12 +26,12 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
         {items.map(({ icon: Icon, title: itemTitle, text }) => (
           <li key={itemTitle} data-stagger-item className="flex items-stretch gap-4">
             <Icon
-              className="size-8 shrink-0 self-center fill-violet-300/30 text-violet-300"
+              className="size-8 shrink-0 self-center fill-brass-300/30 text-brass-300"
               strokeWidth={1.5}
               aria-hidden="true"
             />
             <span className="flex min-w-0 flex-1 items-stretch">
-              <span className="w-0.5 shrink-0 rounded-full bg-violet-300/60" aria-hidden="true" />
+              <span className="w-0.5 shrink-0 rounded-full bg-brass-300/60" aria-hidden="true" />
               <span className="min-w-0 flex-1 rounded-r-lg bg-white/[0.05] px-4 py-3">
                 <span className="block text-lg font-medium text-white">{itemTitle}</span>
                 <span className="mt-0.5 block text-sm leading-relaxed text-mist-400">{text}</span>
@@ -55,10 +45,12 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
   const textCol = (
     <div data-carousel-item style={{ '--i': 0 } as CSSProperties}>
       <div data-reveal>
-        <h3 className="text-4xl font-semibold leading-tight sm:text-[2.75rem]">{eyebrow}</h3>
-        <p className="mt-3 text-xl font-medium leading-snug text-balance text-mist-100 sm:text-2xl">{title}</p>
+        <h3 id={`${id}-title`} className="text-3xl font-semibold leading-tight text-balance sm:text-4xl">
+          <span className="sr-only">{eyebrow}: </span>
+          {title}
+        </h3>
         {descriptionBelowImage && shot ? null : (
-          <p className="mt-4 text-base leading-relaxed text-mist-400 sm:text-lg">{description}</p>
+          <p className="mt-5 text-base leading-relaxed text-mist-400 sm:text-lg">{description}</p>
         )}
         {cta ? (
           <Button href={CONTACT_HREF} size="lg" className="mt-8 hover:translate-y-0!">
@@ -82,7 +74,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
     <div data-reveal={reverse ? 'left' : 'right'} className={secondaryShot ? 'pb-14 sm:pb-24' : ''}>
       <div className="relative">
         <div data-carousel-item style={{ '--i': 1 } as CSSProperties} className={secondaryShot ? 'w-[88%]' : ''}>
-          <div {...(flowImages ? {} : { 'data-parallax': '' })}>
+          <div>
             {utensilList ? (
               <AnimatedList items={utensilList} />
             ) : flowImages ? (
@@ -102,7 +94,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
             style={{ '--i': 2 } as CSSProperties}
             className="absolute -bottom-14 right-0 w-[62%] sm:-bottom-24"
           >
-            <div data-parallax-alt>
+            <div>
               <ScreenshotFrame
                 variant="browser"
                 name={secondaryShot.name}
@@ -114,7 +106,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
         ) : null}
       </div>
       {descriptionBelowImage ? (
-        <p className="mt-6 border-l-2 border-violet-300/50 pl-4 text-base leading-relaxed text-mist-300 sm:text-lg">
+        <p className="mt-6 border-l-2 border-brass-300/50 pl-4 text-base leading-relaxed text-mist-300 sm:text-lg">
           {description}
         </p>
       ) : null}
@@ -172,10 +164,6 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
 
   return (
     <article id={id} ref={ref} data-reveal-scope aria-labelledby={`${id}-title`}>
-      <span id={`${id}-title`} className="sr-only">
-        {eyebrow}: {title}
-      </span>
-
       {video ? (
         <MediaCarousel
           ariaLabel={`${eyebrow}: texto e vídeo`}

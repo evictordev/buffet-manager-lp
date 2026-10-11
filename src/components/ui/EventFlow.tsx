@@ -319,14 +319,14 @@ export function EventFlow({ images, mainFrameRef, reduced }: Props) {
                   glowRefs.current[k] = el
                 }}
                 aria-hidden="true"
-                className="pointer-events-none absolute -inset-px rounded-xl border border-violet-300/60 opacity-0 shadow-[0_0_28px_-6px_rgb(167_139_250/0.45)]"
+                className="pointer-events-none absolute -inset-px rounded-xl border border-brass-300/60 opacity-0 shadow-[0_0_28px_-6px_rgb(226_183_104/0.4)]"
               />
               <h4
                 key={img.name}
                 className="flow-title-in relative flex items-center gap-2 text-xs font-medium leading-tight text-white sm:text-base"
               >
                 {Icon ? (
-                  <Icon className="size-4 shrink-0 text-violet-300 sm:size-5" strokeWidth={1.5} aria-hidden="true" />
+                  <Icon className="size-4 shrink-0 text-brass-300 sm:size-5" strokeWidth={1.5} aria-hidden="true" />
                 ) : null}
                 {img.label}
               </h4>

@@ -24,7 +24,7 @@ export function MediaCarousel({ slides, ariaLabel }: Props) {
   }
 
   const arrow =
-    'absolute top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white backdrop-blur transition-colors hover:border-violet-300/50 hover:bg-ink-950/90'
+    'absolute top-1/2 z-10 flex size-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white backdrop-blur transition-colors hover:border-brass-300/50 hover:bg-ink-950/90'
 
   return (
     <div role="group" aria-roledescription="carrossel" aria-label={ariaLabel} onKeyDown={onKeyDown} className="relative">
@@ -60,7 +60,7 @@ export function MediaCarousel({ slides, ariaLabel }: Props) {
             onClick={() => go(i)}
             aria-label={`Ir para ${slide.label}`}
             aria-current={i === active}
-            className={`h-2 rounded-full transition-all ${i === active ? 'w-6 bg-violet-300' : 'w-2 bg-ink-500 hover:bg-mist-500'}`}
+            className={`h-2 rounded-full transition-all ${i === active ? 'w-6 bg-brass-300' : 'w-2 bg-ink-500 hover:bg-mist-500'}`}
           />
         ))}
       </div>

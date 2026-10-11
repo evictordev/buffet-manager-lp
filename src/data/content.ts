@@ -44,7 +44,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
   {
     id: 'dashboard',
     eyebrow: 'Dashboard',
-    title: 'Tenha uma visão completa do seu buffet e acompanhe tudo o que acontece em uma só tela',
+    title: 'Tudo o que acontece no seu buffet, em uma só tela',
     description:
       'O dashboard é o ponto de partida da operação: reúne as informações relevantes do buffet em uma única tela, para você acompanhar o que importa sem abrir vários controles.',
     tone: 'indigo',
@@ -86,7 +86,7 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
   {
     id: 'profissionais',
     eyebrow: 'Gestão de profissionais',
-    title: 'Cada profissional, cada função, tudo organizado. Mais clareza para a sua equipe e mais organização para você',
+    title: 'Sua equipe organizada, com cada profissional na função certa',
     description:
       'Mantenha os dados, as funções e a disponibilidade da equipe à mão para montar cada evento com mais segurança e acompanhar as informações de pagamento.',
     tone: 'violet',

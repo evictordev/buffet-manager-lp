@@ -33,7 +33,7 @@ export function Footer() {
           <ul className="mt-4 space-y-2.5">
             <li>
               <a href={CONTACT_HREF} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                Falar pelo WhatsApp
+                Falar pelo WhatsApp<span className="sr-only"> (abre em nova aba)</span>
               </a>
             </li>
           </ul>

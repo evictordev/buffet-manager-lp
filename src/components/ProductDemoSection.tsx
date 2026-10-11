@@ -90,7 +90,7 @@ export function ProductDemoSection() {
                 className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                   selected
                     ? 'border-white bg-white text-ink-950'
-                    : 'border-ink-500 bg-ink-800 text-mist-300 hover:border-violet-400/60 hover:bg-ink-700 hover:text-white'
+                    : 'border-ink-500 bg-ink-800 text-mist-300 hover:border-brass-400/50 hover:bg-ink-700 hover:text-white'
                 }`}
               >
                 {screen.label}

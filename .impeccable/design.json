@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T13:23:00.434Z",
+  "title": "Design System: Buffet Manager",
+  "extensions": {
+    "colorMeta": {
+      "ink-950": {
+        "role": "neutral",
+        "displayName": "Noite Profunda",
+        "canonical": "#03031a",
+        "tonalRamp": [
+          "#03031a",
+          "#07071f",
+          "#0e0f29",
+          "#171839",
+          "#23254d",
+          "#343766",
+          "#7e84b0",
+          "#eef0ff"
+        ]
+      },
+      "white": {
+        "role": "primary",
+        "displayName": "Branco de Ação",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#343766",
+          "#7e84b0",
+          "#9ba0c8",
+          "#c3c7e6",
+          "#dfe2f7",
+          "#eef0ff",
+          "#f7f8ff",
+          "#ffffff"
+        ]
+      },
+      "brass-300": {
+        "role": "secondary",
+        "displayName": "Latão",
+        "canonical": "#f0d49a",
+        "tonalRamp": [
+          "#3b2a0e",
+          "#5c4318",
+          "#7d5c22",
+          "#a8782d",
+          "#c9963f",
+          "#e2b768",
+          "#f0d49a",
+          "#faefd3"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Título de seção (h2)."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Subtítulo de seção."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descrições e texto corrente."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navegação, botões e rótulos."
+      }
+    },
+    "shadows": [
+      {
+        "name": "soft",
+        "value": "0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 30px -18px rgb(0 0 0 / 0.7)",
+        "purpose": "Botão e cartão em repouso."
+      },
+      {
+        "name": "float",
+        "value": "0 24px 50px -24px rgb(0 0 0 / 0.75)",
+        "purpose": "Elementos flutuantes."
+      },
+      {
+        "name": "device",
+        "value": "0 50px 100px -50px rgb(226 183 104 / 0.16), 0 30px 60px -30px rgb(0 0 0 / 0.8)",
+        "purpose": "Capturas de tela com halo de latão."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Entradas de carrossel, lista e título."
+      },
+      {
+        "name": "hover-fast",
+        "value": "200ms",
+        "purpose": "Transições de botão."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal: teste grátis por 1 mês.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\">Teste 1 mês grátis</a>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#03031a;padding:10px 16px;border-radius:16px;font:500 14px 'Inter Variable',system-ui,sans-serif;text-decoration:none;box-shadow:0 1px 0 rgb(255 255 255/.03) inset,0 12px 30px -18px rgb(0 0 0/.7);transition:background-color .2s,transform .2s}.ds-btn-primary:hover{background:#eef0ff;transform:translateY(-2px)}.ds-btn-primary:focus-visible{outline:2px solid #f0d49a;outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ação secundária sobre navy.",
+      "html": "<a class=\"ds-btn-secondary\" href=\"#\">Ver demonstração</a>",
+      "css": ".ds-btn-secondary{display:inline-flex;align-items:center;justify-content:center;background:rgb(14 15 41/.7);color:#fff;border:1px solid #343766;padding:10px 16px;border-radius:16px;font:500 14px 'Inter Variable',system-ui,sans-serif;text-decoration:none;transition:background-color .2s,border-color .2s}.ds-btn-secondary:hover{background:#171839;border-color:rgb(226 183 104/.5)}.ds-btn-secondary:focus-visible{outline:2px solid #f0d49a;outline-offset:2px}"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": "button-secondary",
+      "description": "Link de navegação; ativo com fundo ink-700.",
+      "html": "<a class=\"ds-nav\" href=\"#\">Funcionalidades</a>",
+      "css": ".ds-nav{display:inline-block;padding:8px 14px;border-radius:8px;color:#9ba0c8;font:500 14px 'Inter Variable',system-ui,sans-serif;text-decoration:none;transition:color .2s}.ds-nav:hover{color:#fff}.ds-nav:focus-visible{outline:2px solid #f0d49a;outline-offset:2px}"
+    },
+    {
+      "name": "Icon Tile",
+      "kind": "custom",
+      "description": "Ícone em tile colorido com brilho do tom.",
+      "html": "<span class=\"ds-tile\"></span>",
+      "css": ".ds-tile{display:inline-block;width:44px;height:44px;border-radius:12px;background:#c026d3;box-shadow:0 8px 24px -8px rgb(192 38 211/.7)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Salão à Meia-Luz",
+    "overview": "Um salão de festas à noite: o fundo é navy profundo, a luz é o latão quente do cloche e da comida, e o que está iluminado é o sistema real, com suas capturas de tela. A página é escura, sofisticada e calma.",
+    "keyCharacteristics": [
+      "Tema escuro único, color-scheme: dark.",
+      "Profundidade por camadas tonais e bordas finas, não por sombras pesadas.",
+      "Botão principal branco sobre navy: o ponto mais claro da tela é a ação.",
+      "Movimento com GSAP e curvas suaves, sempre com alternativa para prefers-reduced-motion."
+    ],
+    "rules": [
+      {
+        "name": "The Acento Pequeno Rule",
+        "body": "Fúcsia, índigo, esmeralda, âmbar e violeta ficam em ícones, brilhos e pequenos acentos. Nunca preenchem uma seção inteira.",
+        "section": "colors"
+      },
+      {
+        "name": "The Um Branco Rule",
+        "body": "O branco sólido é reservado ao botão principal e aos títulos.",
+        "section": "colors"
+      },
+      {
+        "name": "The Três Níveis Rule",
+        "body": "Seção abre com título, subtítulo e descrição, nessa ordem e com esse peso decrescente.",
+        "section": "typography"
+      },
+      {
+        "name": "The Latão Único Rule",
+        "body": "O latão é o único acento de interface. Violeta, fúcsia e índigo ficam nos tons do sistema e na luz de fundo do cloche, nunca em foco, hover ou destaque.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do manter o fundo em ink-950 e subir a elevação com ink-800/ink-700.",
+      "Do reservar branco sólido ao botão principal e aos títulos.",
+      "Do mostrar o sistema real com capturas verdadeiras.",
+      "Do oferecer alternativa a toda animação sob prefers-reduced-motion.",
+      "Do usar o anel de foco brass-300 em todo elemento interativo."
+    ],
+    "donts": [
+      "Don't usar fúcsia, índigo, esmeralda ou âmbar como fundo de seção inteira.",
+      "Don't usar sombras duras ou pretas puras sem desfoque longo.",
+      "Don't criar uma versão clara da página: o tema é escuro.",
+      "Don't inventar depoimentos, logos de clientes ou números."
+    ]
+  }
+}

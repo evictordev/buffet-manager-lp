@@ -62,7 +62,7 @@ export function BuffetScene() {
       />
       {failed ? (
         <div className="flex size-full items-center justify-center" aria-hidden="true">
-          <ChefHat className="size-24 text-violet-300/60" strokeWidth={1.2} />
+          <ChefHat className="size-24 text-brass-300/60" strokeWidth={1.2} />
         </div>
       ) : null}
     </div>

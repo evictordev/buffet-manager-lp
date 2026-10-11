@@ -14,15 +14,6 @@ export function FinalCTASection() {
         data-reveal
         className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-ink-500 bg-ink-800 px-6 py-16 text-center sm:px-14 sm:py-20"
       >
-        <div
-          className="pointer-events-none absolute -left-24 -top-24 size-80 rounded-full bg-fuchsia-700/30 blur-[100px]"
-          aria-hidden="true"
-        />
-        <div
-          className="pointer-events-none absolute -bottom-32 -right-20 size-96 rounded-full bg-indigo-600/30 blur-[100px]"
-          aria-hidden="true"
-        />
-
         <div className="relative">
           <h2 id="cta-title" className="mx-auto max-w-2xl text-3xl font-semibold leading-tight text-balance sm:text-4xl">
             Leve a gestão do seu buffet para um novo nível.
@@ -33,9 +24,10 @@ export function FinalCTASection() {
           </p>
           <div className="mt-9">
             <Button href={CONTACT_HREF} size="lg">
-              Quero conhecer o Buffet Manager
+              Teste grátis por 1 mês
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </Button>
+            <p className="mt-4 text-sm text-mist-400">Sem cartão de crédito. O teste começa por uma conversa no WhatsApp.</p>
           </div>
         </div>
       </div>

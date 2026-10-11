@@ -46,7 +46,7 @@ export function TextType({ words, typingSpeed = 150, deletingSpeed = 90, pauseTi
     return () => window.clearTimeout(id)
   }, [text, deleting, index, reduced, words, typingSpeed, deletingSpeed, pauseTime])
 
-  if (reduced) return <span className="rounded-[0.12em] bg-violet-500/40 text-white">{words[0]}</span>
+  if (reduced) return <span className="rounded-[0.12em] bg-brass-400/25 text-white">{words[0]}</span>
 
   // Reserva a largura da maior palavra: a linha nunca reflui enquanto digita.
   const longest = words.reduce((a, b) => (b.length > a.length ? b : a))
@@ -54,7 +54,7 @@ export function TextType({ words, typingSpeed = 150, deletingSpeed = 90, pauseTi
   return (
     <span aria-hidden="true" className="relative inline-block whitespace-nowrap text-left">
       <span className="invisible">{longest}</span>
-      <span className="absolute inset-y-0 left-0 rounded-[0.12em] bg-violet-500/40 text-white">
+      <span className="absolute inset-y-0 left-0 rounded-[0.12em] bg-brass-400/25 text-white">
         {text}
         <span className="text-type-cursor ml-0.5 inline-block w-[0.06em] translate-y-[0.08em] bg-current align-baseline">
           &nbsp;

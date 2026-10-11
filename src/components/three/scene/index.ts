@@ -144,14 +144,14 @@ export function createBuffetScene(canvas: HTMLCanvasElement, opts: BuffetSceneOp
   if (!opts.reducedMotion) {
     timeline
       .to(state, { lift: 0, steam: 0, duration: 0.01 })
-      .to(state, { lift: 1, duration: 1.1, ease: 'power3.inOut' }, 0.5)
-      .to(state, { steam: 1, duration: 1.4, ease: 'sine.inOut' }, 1.3)
-      .to(state, { steam: 0.55, duration: 2.5, ease: 'sine.inOut' }, 4.4)
-      .to(state, { steam: 0, duration: 1.1, ease: 'sine.in' }, 6.4)
-      .to(state, { lift: 0, duration: 1.6, ease: 'power3.inOut' }, 6.9)
+      .to(state, { lift: 1, duration: 0.55, ease: 'power3.inOut' }, 0.12)
+      .to(state, { steam: 1, duration: 0.9, ease: 'sine.inOut' }, 0.75)
+      .to(state, { steam: 0.55, duration: 1.5, ease: 'sine.inOut' }, 3.1)
+      .to(state, { steam: 0, duration: 0.65, ease: 'sine.in' }, 4.45)
+      .to(state, { lift: 0, duration: 0.8, ease: 'power3.inOut' }, 4.65)
       // Com a cloche já fechada, troca para o próximo item
-      .call(() => show((current + 1) % items.length), [], 9.3)
-      .to(state, {}, 9.5)
+      .call(() => show((current + 1) % items.length), [], 5.5)
+      .to(state, {}, 7.58)
   }
 
   const onPointerMove = (e: PointerEvent) => {
