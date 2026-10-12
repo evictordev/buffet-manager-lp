@@ -16,18 +16,29 @@ export function FinalCTASection() {
       >
         <div className="relative">
           <h2 id="cta-title" className="mx-auto max-w-2xl text-3xl font-semibold leading-tight text-balance sm:text-4xl">
-            Leve a gestão do seu buffet para um novo nível.
+            Teste o Buffet Manager por 1 mês, no seu próximo evento.
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-mist-300">
-            Organize sua operação, acompanhe seus eventos e tenha mais controle sobre a rotina do seu negócio com o
-            Buffet Manager.
+            Veja o orçamento, o contrato e a conferência de utensílios funcionando na sua rotina, sem pagar nada.
           </p>
+          <ol className="mx-auto mt-8 grid max-w-2xl gap-3 text-left text-sm text-mist-300 sm:grid-cols-3">
+            {['Toque no botão e chame no WhatsApp.', 'Combine com a gente o início do teste.', 'Use o sistema por 1 mês, grátis.'].map(
+              (step, i) => (
+                <li key={step} className="flex gap-3">
+                  <span className="font-semibold text-brass-400" aria-hidden="true">
+                    {i + 1}.
+                  </span>
+                  {step}
+                </li>
+              ),
+            )}
+          </ol>
           <div className="mt-9">
             <Button href={CONTACT_HREF} size="lg">
-              Teste grátis por 1 mês
+              Pedir teste grátis no WhatsApp
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </Button>
-            <p className="mt-4 text-sm text-mist-400">Sem cartão de crédito. O teste começa por uma conversa no WhatsApp.</p>
+            <p className="mt-4 text-sm text-mist-400">Sem cartão de crédito.</p>
           </div>
         </div>
       </div>

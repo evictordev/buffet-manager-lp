@@ -7,16 +7,22 @@ export type CarouselSlide = {
   render: (active: boolean) => ReactNode
 }
 
-type Props = { slides: CarouselSlide[]; ariaLabel: string }
+type Props = {
+  slides: CarouselSlide[]
+  ariaLabel: string
+  /** Slide ativo; controlado por quem renderiza, para as setas laterais poderem ficar fora do carrossel. */
+  active: number
+  onChange: (index: number) => void
+}
 
 /**
- * Carrossel de blocos inteiros: ao passar para o lado, o slide inteiro (texto e imagens)
- * dá lugar ao próximo, um componente de cada vez (animação em src/index.css). Slides inativos ficam inertes e escondidos para leitores de tela.
+ * Carrossel de blocos: ao passar para o lado, o slide inteiro dá lugar ao próximo, um componente de cada vez
+ * (animação em src/index.css). Slides inativos ficam inertes e escondidos para leitores de tela.
+ * Aqui ficam os pontos e as setas do celular; as setas laterais (sm+) são do bloco que contém o carrossel.
  */
-export function MediaCarousel({ slides, ariaLabel }: Props) {
-  const [active, setActive] = useState(0)
+export function MediaCarousel({ slides, ariaLabel, active, onChange }: Props) {
   const count = slides.length
-  const go = (i: number) => setActive((i + count) % count)
+  const go = (i: number) => onChange((i + count) % count)
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     // As setas dos controles do vídeo (buscar, volume) não trocam de slide
@@ -25,8 +31,8 @@ export function MediaCarousel({ slides, ariaLabel }: Props) {
     if (e.key === 'ArrowRight') go(active + 1)
   }
 
-  const arrow =
-    'absolute top-1/2 z-10 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white backdrop-blur transition-colors hover:border-brass-300/50 hover:bg-ink-950/90'
+  const dotArrow =
+    'flex size-11 items-center justify-center rounded-full border border-white/15 bg-ink-800 text-white transition-colors hover:border-brass-300/50 hover:bg-ink-700'
 
   return (
     <div role="group" aria-roledescription="carrossel" aria-label={ariaLabel} onKeyDown={onKeyDown} className="relative">
@@ -47,14 +53,10 @@ export function MediaCarousel({ slides, ariaLabel }: Props) {
         ))}
       </div>
 
-      <button type="button" onClick={() => go(active - 1)} aria-label="Slide anterior" className={`${arrow} left-0 sm:-left-5 lg:-left-7 2xl:-left-20`}>
-        <ChevronLeft className="size-5" strokeWidth={1.5} aria-hidden="true" />
-      </button>
-      <button type="button" onClick={() => go(active + 1)} aria-label="Próximo slide" className={`${arrow} right-0 sm:-right-5 lg:-right-7 2xl:-right-20`}>
-        <ChevronRight className="size-5" strokeWidth={1.5} aria-hidden="true" />
-      </button>
-
-      <div className="mt-4 flex items-center justify-center">
+      <div className="mt-4 flex items-center justify-center gap-2">
+        <button type="button" onClick={() => go(active - 1)} aria-label="Slide anterior" className={`${dotArrow} sm:hidden`}>
+          <ChevronLeft className="size-5" strokeWidth={1.5} aria-hidden="true" />
+        </button>
         {slides.map((slide, i) => (
           <button
             key={slide.label}
@@ -70,6 +72,9 @@ export function MediaCarousel({ slides, ariaLabel }: Props) {
             />
           </button>
         ))}
+        <button type="button" onClick={() => go(active + 1)} aria-label="Próximo slide" className={`${dotArrow} sm:hidden`}>
+          <ChevronRight className="size-5" strokeWidth={1.5} aria-hidden="true" />
+        </button>
       </div>
     </div>
   )

@@ -312,7 +312,7 @@ export function EventFlow({ images, mainFrameRef, reduced }: Props) {
           return (
             <section
               key={k}
-              className="relative rounded-xl border border-white/10 bg-gradient-to-b from-ink-800/80 to-ink-950/80 p-3 sm:p-5"
+              className="relative rounded-xl border border-white/10 bg-gradient-to-b from-ink-800/80 to-ink-950/80 p-2.5 sm:p-5"
             >
               <span
                 ref={(el) => {
@@ -323,7 +323,7 @@ export function EventFlow({ images, mainFrameRef, reduced }: Props) {
               />
               <h4
                 key={img.name}
-                className="flow-title-in relative flex items-center gap-2 text-xs font-medium leading-tight text-white sm:text-base"
+                className="flow-title-in relative flex items-center gap-2 text-base font-medium leading-tight text-white max-sm:sr-only"
               >
                 {Icon ? (
                   <Icon className="size-4 shrink-0 text-brass-300 sm:size-5" strokeWidth={1.5} aria-hidden="true" />
@@ -334,7 +334,7 @@ export function EventFlow({ images, mainFrameRef, reduced }: Props) {
                 ref={(el) => {
                   slotRefs.current[k] = el
                 }}
-                className="relative mt-3 aspect-[16/11] w-full rounded-md border border-dashed border-white/10 sm:mt-4"
+                className="relative aspect-[16/11] w-full rounded-md border border-dashed border-white/10 sm:mt-4"
               >
                 {reduced ? <CardFace image={img} small /> : null}
               </div>

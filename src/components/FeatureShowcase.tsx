@@ -1,6 +1,6 @@
-import { useRef, type CSSProperties } from 'react'
+import { useRef, useState, type CSSProperties } from 'react'
 import type { FeatureGroup } from '../data/content'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { CONTACT_HREF } from '../config/site'
 import { Button } from './ui/Button'
 import { useGsapScope } from '../hooks/useGsapScope'
@@ -13,10 +13,15 @@ import { ScreenshotFrame } from './ui/ScreenshotFrame'
 
 type Props = { group: FeatureGroup; reverse?: boolean }
 
+const sideArrow =
+  'absolute top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white backdrop-blur transition-colors hover:border-brass-300/50 hover:bg-ink-950/90 sm:flex'
+
 /** Bloco de uma categoria de funcionalidades: texto, recursos e capturas de tela correspondentes. */
 export function FeatureShowcase({ group, reverse = false }: Props) {
   const ref = useRef<HTMLElement>(null)
   const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, cta, flow, descriptionBelowImage, utensilList, highlight } = group
+
+  const [slide, setSlide] = useState(0)
 
   useGsapScope(ref)
 
@@ -70,8 +75,9 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
   const mainFrameRef = useRef<HTMLDivElement>(null)
   const reduced = usePrefersReducedMotion()
 
-  const visualCol = shot ? (
-    <div data-reveal={reverse ? 'left' : 'right'} className={secondaryShot ? 'pb-14 sm:pb-24' : ''}>
+  // Com vídeo, só a coluna visual (capturas e vídeo) passa de lado; o texto fica parado
+  const visualSlide = shot ? (
+    <div className={secondaryShot ? 'pb-14 sm:pb-24' : ''}>
       <div className="relative">
         <div data-carousel-item style={{ '--i': 1 } as CSSProperties} className={secondaryShot ? 'w-[88%]' : ''}>
           <div>
@@ -110,6 +116,29 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
           {description}
         </p>
       ) : null}
+    </div>
+  ) : null
+
+  const visualCol = shot ? (
+    <div data-reveal={reverse ? 'left' : 'right'}>
+      {video ? (
+        <MediaCarousel
+          ariaLabel={`${eyebrow}: capturas e vídeo`}
+          active={slide}
+          onChange={setSlide}
+          slides={[
+            { label: `Capturas: ${eyebrow}`, render: () => visualSlide },
+            {
+              label: video.label,
+              render: (active) => (
+                <VideoSlide src={`${import.meta.env.BASE_URL}${video.src}`} alt={video.alt} active={active} />
+              ),
+            },
+          ]}
+        />
+      ) : (
+        visualSlide
+      )}
     </div>
   ) : null
 
@@ -163,23 +192,29 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
   )
 
   return (
-    <article id={id} ref={ref} data-reveal-scope aria-labelledby={`${id}-title`}>
-      {video ? (
-        <MediaCarousel
-          ariaLabel={`${eyebrow}: texto e vídeo`}
-          slides={[
-            { label: eyebrow, render: () => content },
-            {
-              label: video.label,
-              render: (active) => (
-                <VideoSlide src={`${import.meta.env.BASE_URL}${video.src}`} alt={video.alt} active={active} />
-              ),
-            },
-          ]}
-        />
-      ) : (
-        content
-      )}
+    <article id={id} ref={ref} data-reveal-scope aria-labelledby={`${id}-title`} className="relative">
+      {content}
+      {/* No computador as setas ficam nas laterais do bloco todo; no celular ficam ao lado dos pontos */}
+      {video && shot ? (
+        <>
+          <button
+            type="button"
+            onClick={() => setSlide((slide + 1) % 2)}
+            aria-label="Slide anterior"
+            className={`${sideArrow} -left-5 lg:-left-7 2xl:-left-20`}
+          >
+            <ChevronLeft className="size-5" strokeWidth={1.5} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setSlide((slide + 1) % 2)}
+            aria-label="Próximo slide"
+            className={`${sideArrow} -right-5 lg:-right-7 2xl:-right-20`}
+          >
+            <ChevronRight className="size-5" strokeWidth={1.5} aria-hidden="true" />
+          </button>
+        </>
+      ) : null}
     </article>
   )
 }

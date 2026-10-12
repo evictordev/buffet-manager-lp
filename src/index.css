@@ -51,7 +51,7 @@
 }
 
 /*
- * Carrossel de blocos: os componentes do slide que sai (texto, foto, foto) saem um de cada vez,
+ * Carrossel de blocos: os componentes do slide que sai (foto, foto) saem um de cada vez,
  * e só então os do próximo slide entram. --i define a ordem de cada componente.
  */
 .carousel-slide [data-carousel-item] {

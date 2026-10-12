@@ -25,18 +25,18 @@ export function HeroSection() {
             data-hero-text
             className="text-5xl font-semibold leading-[1.08] text-balance sm:text-6xl lg:text-7xl"
           >
-            <span className="sr-only">Chega de planilha e papel solto para controlar seus eventos.</span>
+            <span className="sr-only">Chega de planilha e papel solto para controlar seus orçamentos, contratos e utensílios.</span>
             <span aria-hidden="true">
-              Chega de planilha e papel solto para controlar seus <TextType words={['eventos.', 'orçamentos.', 'utensílios.']} />
+              Chega de planilha e papel solto para controlar seus <TextType words={['orçamentos.', 'contratos.', 'utensílios.']} />
             </span>
           </h1>
           <p data-hero-text className="mt-6 text-lg leading-relaxed text-mist-400">
-            Gerencie eventos, orçamentos, contratos, profissionais e clientes em um só lugar. Simplifique sua rotina e
-            tenha mais controle sobre cada detalhe do seu buffet.
+            Do orçamento ao contrato, da equipe do dia da festa à conferência dos utensílios: um único fluxo para o seu
+            buffet.
           </p>
           <div data-hero-text className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Button href={CONTACT_HREF} size="lg">
-              Teste grátis por 1 mês
+              Pedir teste grátis no WhatsApp
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </Button>
             <Button href="#demonstracao" variant="secondary" size="lg">
@@ -45,7 +45,7 @@ export function HeroSection() {
             </Button>
           </div>
           <p data-hero-text className="mt-4 text-sm text-mist-500">
-            Sem cartão de crédito. Fale com a gente pelo WhatsApp e comece o teste.
+            1 mês grátis, sem cartão de crédito. O botão abre uma conversa no WhatsApp.
           </p>
         </div>
 
