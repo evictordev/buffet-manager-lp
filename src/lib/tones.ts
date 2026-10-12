@@ -15,13 +15,17 @@ export const TONE_CYCLE: Tone[] = ['fuchsia', 'indigo', 'emerald', 'amber']
  * Luz de cada bloco: tripla RGB dos tons do sistema em versão clara (contraste sobre o navy),
  * usada como variável CSS `--tone` (ver `.tone-wash` e `.tone-card` em index.css).
  */
-export const TONE_RGB: Record<Tone, string> = {
-  indigo: '129 140 248',
-  fuchsia: '232 121 249',
-  violet: '167 139 250',
-  emerald: '52 211 153',
-  amber: '251 191 36',
-}
-
-/** Latão: luz do cloche, para o fecho da página. */
+/** Latão: a luz do cloche. Cor única de todos os blocos. */
 export const BRASS_RGB = '226 183 104'
+
+/**
+ * Luz de cada bloco. Todos os tons usam o latão: os blocos mantêm as chaves por tom (para o código não mudar),
+ * mas o site tem uma só cor de destaque. Para voltar a ter uma cor por bloco, troque os valores abaixo.
+ */
+export const TONE_RGB: Record<Tone, string> = {
+  indigo: BRASS_RGB,
+  fuchsia: BRASS_RGB,
+  violet: BRASS_RGB,
+  emerald: BRASS_RGB,
+  amber: BRASS_RGB,
+}

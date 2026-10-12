@@ -11,6 +11,34 @@ export function ProductDemoSection() {
   const stageRef = useRef<HTMLDivElement>(null)
   const firstRender = useRef(true)
   const [active, setActive] = useState(0)
+  // Reinicia o preenchimento ao clicar no trecho que já está ativo
+  const [cycle, setCycle] = useState(0)
+  const [hover, setHover] = useState(false)
+  const [keyboardFocus, setKeyboardFocus] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const [offscreen, setOffscreen] = useState(true)
+  const paused = hover || keyboardFocus || hidden || offscreen
+
+  const count = DEMO_SCREENS.length
+  const next = () => setActive((i) => (i + 1) % count)
+  const goTo = (i: number) => {
+    setActive(i)
+    setCycle((c) => c + 1)
+  }
+
+  // O avanço sai do fim da animação da linha do tempo; aqui só se decide quando ela deve estar parada
+  useEffect(() => {
+    const onVisibility = () => setHidden(document.hidden)
+    onVisibility()
+    document.addEventListener('visibilitychange', onVisibility)
+    const el = ref.current
+    const io = el ? new IntersectionObserver(([entry]) => setOffscreen(!entry.isIntersecting), { threshold: 0.3 }) : null
+    if (el) io?.observe(el)
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility)
+      io?.disconnect()
+    }
+  }, [])
 
   useGsapScope(ref, {
     full: (root) => {
@@ -45,16 +73,16 @@ export function ProductDemoSection() {
   }, [active])
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    const last = DEMO_SCREENS.length - 1
-    let next = active
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = active === last ? 0 : active + 1
-    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = active === 0 ? last : active - 1
-    else if (e.key === 'Home') next = 0
-    else if (e.key === 'End') next = last
+    const last = count - 1
+    let target = active
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') target = active === last ? 0 : active + 1
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') target = active === 0 ? last : active - 1
+    else if (e.key === 'Home') target = 0
+    else if (e.key === 'End') target = last
     else return
     e.preventDefault()
-    setActive(next)
-    document.getElementById(`demo-tab-${next}`)?.focus()
+    goTo(target)
+    document.getElementById(`demo-tab-${target}`)?.focus()
   }
 
   const current = DEMO_SCREENS[active]
@@ -69,7 +97,12 @@ export function ProductDemoSection() {
     >
       {/* A luz da seção acompanha o módulo aberto */}
       <div className="tone-wash pointer-events-none absolute inset-x-0 bottom-0 top-1/3 -z-10 transition-opacity" aria-hidden="true" />
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+      <div
+        className="mx-auto max-w-7xl px-5 sm:px-8"
+        // Foco por teclado pausa a sequência; foco por clique não (senão ela pararia depois de qualquer clique)
+        onFocusCapture={(e) => setKeyboardFocus((e.target as HTMLElement).matches(':focus-visible'))}
+        onBlurCapture={() => setKeyboardFocus(false)}
+      >
         <SectionHeading
           id="demo-title"
           title="Demonstração"
@@ -77,15 +110,17 @@ export function ProductDemoSection() {
           description="Navegue pelos módulos e entenda como o sistema organiza a rotina antes de entrar em contato."
         />
 
+        {/* Linha do tempo: um trecho por módulo; o ativo se preenche em 6s e, ao terminar, passa para o próximo */}
         <div
           role="tablist"
           aria-label="Módulos do sistema"
           onKeyDown={onKeyDown}
-          className="mx-auto mt-10 flex max-w-4xl flex-wrap justify-center gap-2"
+          className="mx-auto mt-10 flex max-w-3xl gap-1.5"
           data-reveal
         >
           {DEMO_SCREENS.map((screen, index) => {
             const selected = index === active
+            const color = `rgb(${TONE_RGB[screen.tone]})`
             return (
               <button
                 key={screen.name}
@@ -94,31 +129,44 @@ export function ProductDemoSection() {
                 type="button"
                 aria-selected={selected}
                 aria-controls="demo-panel"
+                aria-label={screen.label}
                 tabIndex={selected ? 0 : -1}
-                onClick={() => setActive(index)}
-                className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                  selected
-                    ? 'border-white bg-white text-ink-950'
-                    : 'border-ink-500 bg-ink-800 text-mist-300 hover:border-brass-400/50 hover:bg-ink-700 hover:text-white'
-                }`}
+                onClick={() => goTo(index)}
+                className="group flex h-11 flex-1 items-center rounded-sm"
               >
-                <span
-                  aria-hidden="true"
-                  className="size-2 rounded-full"
-                  style={{ backgroundColor: `rgb(${TONE_RGB[screen.tone]})` }}
-                />
-                {screen.label}
+                <span className="relative block h-1 w-full overflow-hidden rounded-full bg-ink-600 transition-[height,background-color] group-hover:bg-ink-500 group-focus-visible:h-1.5">
+                  {index < active ? (
+                    <span className="absolute inset-0 rounded-full" style={{ backgroundColor: color }} />
+                  ) : null}
+                  {selected ? (
+                    <span
+                      key={cycle}
+                      className="timeline-fill absolute inset-0 rounded-full"
+                      style={{ backgroundColor: color, animationPlayState: paused ? 'paused' : 'running' }}
+                      onAnimationEnd={next}
+                    />
+                  ) : null}
+                </span>
               </button>
             )
           })}
         </div>
+        <p
+          aria-live="polite"
+          className="mt-1 text-center text-sm font-medium"
+          style={{ color: `rgb(${TONE_RGB[current.tone]})` }}
+        >
+          {current.label}
+        </p>
 
         <div
           id="demo-panel"
           role="tabpanel"
           aria-labelledby={`demo-tab-${active}`}
           tabIndex={0}
-          className="mx-auto mt-12 max-w-5xl rounded-lg"
+          className="mx-auto mt-10 max-w-5xl rounded-lg"
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
         >
           <div data-demo-device>
             <div ref={stageRef}>

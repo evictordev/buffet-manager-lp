@@ -221,3 +221,29 @@
     @apply bg-brass-400/30 text-white;
   }
 }
+
+/* Linha do tempo da Demonstração: o trecho ativo se preenche em 6s; o fim da animação avança o módulo. */
+.timeline-fill {
+  transform-origin: left;
+  animation: timeline-fill 6s linear forwards;
+}
+
+@keyframes timeline-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Sem movimento: sem preenchimento nem avanço automático; o trecho ativo fica cheio e a navegação é pelos trechos. */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-fill {
+    animation: none;
+  }
+}
+
+/* Cúpula do cloche (CTA final): em telas largas o topo é uma meia-elipse; no celular, só um topo bem arredondado. */
+@media (min-width: 640px) {
+  .cloche-dome {
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  }
+}

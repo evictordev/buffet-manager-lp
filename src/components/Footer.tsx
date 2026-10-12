@@ -41,9 +41,27 @@ export function Footer() {
       </div>
 
       <div className="border-t border-ink-700">
-        <p className="mx-auto max-w-7xl px-5 py-6 text-sm text-mist-500 sm:px-8">
-          © {new Date().getFullYear()} {SITE.name}. Todos os direitos reservados.
-        </p>
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-6 text-sm text-mist-500 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+          <p>
+            © {new Date().getFullYear()} {SITE.name}. Todos os direitos reservados.
+          </p>
+          <p className="flex items-center gap-2">
+            Desenvolvido por
+            {/* O arquivo tem muita margem em volta da marca "db": o recorte é feito aqui, sem alterar a imagem */}
+            <span className="relative block h-8 w-[36px] overflow-hidden">
+              <img
+                src={`${import.meta.env.BASE_URL}images/devdigital.png`}
+                alt="DevDigital"
+                width={1024}
+                height={1024}
+                loading="lazy"
+                decoding="async"
+                className="absolute max-w-none"
+                style={{ width: '213.33%', left: '-56.25%', top: '-38.37%' }}
+              />
+            </span>
+          </p>
+        </div>
       </div>
     </footer>
   )

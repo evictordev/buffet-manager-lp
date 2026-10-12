@@ -13,7 +13,7 @@ const ICONS: Record<string, LucideIcon> = {
 }
 
 const SHADOW_REST = '0 14px 30px -12px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.14)'
-const SHADOW_LEAD = '0 18px 36px -12px rgba(0,0,0,0.85), 0 0 0 1px rgba(232,121,249,0.75), 0 0 28px -8px rgba(232,121,249,0.5)'
+const SHADOW_LEAD = '0 18px 36px -12px rgba(0,0,0,0.85), 0 0 0 1px rgba(240,212,154,0.75), 0 0 28px -8px rgba(226,183,104,0.5)'
 
 const radius = (r: number) => `${r}px ${r}px ${r}px ${r}px`
 
