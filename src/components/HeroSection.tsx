@@ -16,8 +16,13 @@ export function HeroSection() {
       id="inicio"
       ref={ref}
       aria-labelledby="hero-title"
-      className="relative flex min-h-svh items-center overflow-hidden bg-ink-950 pt-28 pb-16 sm:pt-32 lg:pb-16 lg:pt-28"
+      className="relative isolate flex min-h-svh items-center overflow-hidden bg-ink-950 pt-28 pb-16 sm:pt-32 lg:pb-16 lg:pt-28"
     >
+      <div className="hero-glow pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-b from-transparent to-ink-900"
+        aria-hidden="true"
+      />
       <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1fr_1.15fr] lg:gap-10">
         <div className="max-w-xl">
           <h1

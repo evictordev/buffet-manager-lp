@@ -2,6 +2,7 @@ import { useRef, useState, type CSSProperties } from 'react'
 import type { FeatureGroup } from '../data/content'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { CONTACT_HREF } from '../config/site'
+import { TONE_RGB } from '../lib/tones'
 import { Button } from './ui/Button'
 import { useGsapScope } from '../hooks/useGsapScope'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
@@ -19,7 +20,7 @@ const sideArrow =
 /** Bloco de uma categoria de funcionalidades: texto, recursos e capturas de tela correspondentes. */
 export function FeatureShowcase({ group, reverse = false }: Props) {
   const ref = useRef<HTMLElement>(null)
-  const { id, eyebrow, title, description, items, shot, secondaryShot, gallery, video, cta, flow, descriptionBelowImage, utensilList, highlight } = group
+  const { id, eyebrow, title, description, tone, items, shot, secondaryShot, gallery, video, cta, flow, descriptionBelowImage, utensilList, highlight } = group
 
   const [slide, setSlide] = useState(0)
 
@@ -31,13 +32,13 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
         {items.map(({ icon: Icon, title: itemTitle, text }) => (
           <li key={itemTitle} data-stagger-item className="flex items-stretch gap-4">
             <Icon
-              className="size-8 shrink-0 self-center fill-brass-300/30 text-brass-300"
+              className="size-8 shrink-0 self-center fill-[rgb(var(--tone)/0.3)] text-[rgb(var(--tone))]"
               strokeWidth={1.5}
               aria-hidden="true"
             />
             <span className="flex min-w-0 flex-1 items-stretch">
-              <span className="w-0.5 shrink-0 rounded-full bg-brass-300/60" aria-hidden="true" />
-              <span className="min-w-0 flex-1 rounded-r-lg bg-white/[0.05] px-4 py-3">
+              <span className="w-0.5 shrink-0 rounded-full bg-[rgb(var(--tone)/0.7)]" aria-hidden="true" />
+              <span className="min-w-0 flex-1 rounded-r-lg bg-[rgb(var(--tone)/0.08)] px-4 py-3">
                 <span className="block text-lg font-medium text-white">{itemTitle}</span>
                 <span className="mt-0.5 block text-sm leading-relaxed text-mist-400">{text}</span>
               </span>
@@ -112,7 +113,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
         ) : null}
       </div>
       {descriptionBelowImage ? (
-        <p className="mt-6 border-l-2 border-brass-300/50 pl-4 text-base leading-relaxed text-mist-300 sm:text-lg">
+        <p className="mt-6 border-l-2 border-[rgb(var(--tone)/0.6)] pl-4 text-base leading-relaxed text-mist-300 sm:text-lg">
           {description}
         </p>
       ) : null}
@@ -145,11 +146,7 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
   const content = (
     <div
       className={
-        highlight
-          ? 'rounded-[2rem] border border-ink-500 bg-gradient-to-b from-ink-800 to-ink-900 p-5 sm:p-10 lg:p-14'
-          : !shot
-            ? 'rounded-[2rem] border border-ink-600 bg-ink-800/60 p-5 sm:p-10 lg:p-14'
-            : ''
+        highlight || !shot ? 'tone-card rounded-[2rem] border p-5 sm:p-10 lg:p-14' : ''
       }
     >
       {shot ? (
@@ -192,7 +189,15 @@ export function FeatureShowcase({ group, reverse = false }: Props) {
   )
 
   return (
-    <article id={id} ref={ref} data-reveal-scope aria-labelledby={`${id}-title`} className="relative">
+    <article
+      id={id}
+      ref={ref}
+      data-reveal-scope
+      aria-labelledby={`${id}-title`}
+      className="relative isolate"
+      style={{ '--tone': TONE_RGB[tone], '--wash-x': !shot ? '50%' : reverse ? '24%' : '76%' } as CSSProperties}
+    >
+      <div className="tone-wash pointer-events-none absolute -inset-x-16 -inset-y-24 -z-10" aria-hidden="true" />
       {content}
       {/* No computador as setas ficam nas laterais do bloco todo; no celular ficam ao lado dos pontos */}
       {video && shot ? (

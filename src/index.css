@@ -31,7 +31,52 @@
 
   --shadow-soft: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 12px 30px -18px rgb(0 0 0 / 0.7);
   --shadow-float: 0 24px 50px -24px rgb(0 0 0 / 0.75);
-  --shadow-device: 0 50px 100px -50px rgb(226 183 104 / 0.16), 0 30px 60px -30px rgb(0 0 0 / 0.8);
+  /* O halo das capturas segue a luz do bloco (--tone); fora de um bloco, é o latão. */
+  --shadow-device: 0 50px 100px -50px rgb(var(--tone, 226 183 104) / 0.32), 0 30px 60px -30px rgb(0 0 0 / 0.8);
+}
+
+/*
+ * Cada bloco tem a sua luz: --tone (tripla RGB) vem do tom do bloco.
+ * .tone-wash é a neblina colorida atrás do bloco; .tone-card tinge a superfície do cartão com a mesma cor.
+ */
+.tone-wash {
+  background: radial-gradient(
+    ellipse 55% 50% at var(--wash-x, 50%) 42%,
+    rgb(var(--tone) / 0.2),
+    rgb(var(--tone) / 0.06) 55%,
+    transparent 75%
+  );
+  /* As quatro bordas somem em degradê: sem isso a névoa termina numa quina reta e vira "parede". */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 22%, #000 78%, transparent),
+    linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent, #000 22%, #000 78%, transparent),
+    linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+  mask-composite: intersect;
+}
+
+/*
+ * Luz de fundo do hero: três luzes que repetem as da cena 3D (lights.ts).
+ * Latão atrás do cloche, à direita (luz e sombra do cloche concordam com ela), índigo no alto à esquerda, fúcsia baixa atrás do texto.
+ * Valores = BRASS_RGB e TONE_RGB em src/lib/tones.ts. Sem máscara: o hero ocupa a largura toda,
+ * e o rodapé se dissolve num degradê próprio (ver HeroSection).
+ */
+.hero-glow {
+  background:
+    radial-gradient(ellipse 38% 46% at 72% 52%, rgb(226 183 104 / 0.2), transparent 70%),
+    radial-gradient(ellipse 55% 55% at 0% 0%, rgb(129 140 248 / 0.28), transparent 70%),
+    radial-gradient(ellipse 45% 50% at 0% 100%, rgb(232 121 249 / 0.16), transparent 70%);
+}
+
+.tone-card {
+  border-color: rgb(var(--tone) / 0.38);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, rgb(var(--tone)) 14%, var(--color-ink-800)),
+    var(--color-ink-900)
+  );
 }
 
 @keyframes text-type-blink {

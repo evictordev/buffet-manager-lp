@@ -9,7 +9,7 @@ export function FeaturesSection() {
   useGsapScope(ref)
 
   return (
-    <section id="funcionalidades" ref={ref} aria-labelledby="funcionalidades-title" className="bg-ink-900 py-20 sm:py-24">
+    <section id="funcionalidades" ref={ref} aria-labelledby="funcionalidades-title" className="overflow-x-clip bg-ink-900 py-20 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-8">
         <div className="relative flex flex-col items-center">
           <h2

@@ -77,7 +77,7 @@ export function AnimatedList({ items, max = 5, interval = 1800, className = '' }
             className="animated-list-in flex items-center gap-3 rounded-xl border border-white/10 bg-ink-900/85 px-4 shadow-[0_14px_28px_-14px_rgb(0_0_0/0.85)] backdrop-blur-md sm:gap-4"
             style={{ height: CARD_H }}
           >
-            <Utensils className="size-5 shrink-0 text-brass-300" strokeWidth={1.5} aria-hidden="true" />
+            <Utensils className="size-5 shrink-0 text-[rgb(var(--tone,240_212_154))]" strokeWidth={1.5} aria-hidden="true" />
             <span className="min-w-0 flex-1 truncate text-sm font-medium text-white sm:text-base">{entry.item.name}</span>
             <span className="shrink-0 rounded-md bg-white/[0.07] px-2 py-0.5 text-xs font-medium tabular-nums text-mist-100">
               {entry.item.quantity}

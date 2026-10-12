@@ -13,7 +13,7 @@ const ICONS: Record<string, LucideIcon> = {
 }
 
 const SHADOW_REST = '0 14px 30px -12px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.14)'
-const SHADOW_LEAD = '0 18px 36px -12px rgba(0,0,0,0.85), 0 0 0 1px rgba(240,212,154,0.75), 0 0 28px -8px rgba(226,183,104,0.5)'
+const SHADOW_LEAD = '0 18px 36px -12px rgba(0,0,0,0.85), 0 0 0 1px rgba(232,121,249,0.75), 0 0 28px -8px rgba(232,121,249,0.5)'
 
 const radius = (r: number) => `${r}px ${r}px ${r}px ${r}px`
 
@@ -319,14 +319,14 @@ export function EventFlow({ images, mainFrameRef, reduced }: Props) {
                   glowRefs.current[k] = el
                 }}
                 aria-hidden="true"
-                className="pointer-events-none absolute -inset-px rounded-xl border border-brass-300/60 opacity-0 shadow-[0_0_28px_-6px_rgb(226_183_104/0.4)]"
+                className="pointer-events-none absolute -inset-px rounded-xl border border-[rgb(var(--tone)/0.7)] opacity-0 shadow-[0_0_28px_-6px_rgb(var(--tone)/0.45)]"
               />
               <h4
                 key={img.name}
                 className="flow-title-in relative flex items-center gap-2 text-base font-medium leading-tight text-white max-sm:sr-only"
               >
                 {Icon ? (
-                  <Icon className="size-4 shrink-0 text-brass-300 sm:size-5" strokeWidth={1.5} aria-hidden="true" />
+                  <Icon className="size-4 shrink-0 text-[rgb(var(--tone))] sm:size-5" strokeWidth={1.5} aria-hidden="true" />
                 ) : null}
                 {img.label}
               </h4>

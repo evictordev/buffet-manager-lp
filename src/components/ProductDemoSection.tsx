@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { DEMO_SCREENS } from '../data/content'
+import { TONE_RGB } from '../lib/tones'
 import { gsap } from '../lib/gsap'
 import { useGsapScope } from '../hooks/useGsapScope'
 import { ScreenshotFrame } from './ui/ScreenshotFrame'
@@ -59,7 +60,15 @@ export function ProductDemoSection() {
   const current = DEMO_SCREENS[active]
 
   return (
-    <section id="demonstracao" ref={ref} aria-labelledby="demo-title" className="overflow-hidden bg-ink-950 py-20 sm:py-24">
+    <section
+      id="demonstracao"
+      ref={ref}
+      aria-labelledby="demo-title"
+      className="relative isolate overflow-hidden bg-ink-950 py-20 sm:py-24"
+      style={{ '--tone': TONE_RGB[current.tone], '--wash-x': '50%' } as CSSProperties}
+    >
+      {/* A luz da seção acompanha o módulo aberto */}
+      <div className="tone-wash pointer-events-none absolute inset-x-0 bottom-0 top-1/3 -z-10 transition-opacity" aria-hidden="true" />
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
           id="demo-title"
@@ -87,12 +96,17 @@ export function ProductDemoSection() {
                 aria-controls="demo-panel"
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(index)}
-                className={`min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                   selected
                     ? 'border-white bg-white text-ink-950'
                     : 'border-ink-500 bg-ink-800 text-mist-300 hover:border-brass-400/50 hover:bg-ink-700 hover:text-white'
                 }`}
               >
+                <span
+                  aria-hidden="true"
+                  className="size-2 rounded-full"
+                  style={{ backgroundColor: `rgb(${TONE_RGB[screen.tone]})` }}
+                />
                 {screen.label}
               </button>
             )

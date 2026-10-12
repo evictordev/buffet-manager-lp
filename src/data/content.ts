@@ -2,7 +2,6 @@ import {
   BadgeCheck,
   Banknote,
   CalendarClock,
-  CalendarDays,
   ListChecks,
   ListOrdered,
   Users,
@@ -145,35 +144,15 @@ export const FEATURE_GROUPS: FeatureGroup[] = [
     ],
     shot: { name: 'utensilios', alt: 'Gestão de utensílios do Buffet Manager', label: 'Catálogo de utensílios' },
   },
-  {
-    id: 'clientes',
-    eyebrow: 'Gestão de clientes',
-    title: 'Clientes e eventos contratados, lado a lado',
-    description:
-      'O cadastro de clientes centraliza as informações importantes para organizar o atendimento e acompanhar os eventos contratados.',
-    tone: 'amber',
-    items: [
-      {
-        icon: Users,
-        title: 'Cadastro de clientes',
-        text: 'Centralize os dados de quem contrata o buffet.',
-      },
-      {
-        icon: CalendarDays,
-        title: 'Eventos contratados',
-        text: 'Organize o atendimento com o contexto de cada evento.',
-      },
-    ],
-  },
 ]
 
-export const DEMO_SCREENS: ShotRef[] = [
-  { name: 'dashboard', alt: 'Dashboard do Buffet Manager', label: 'Dashboard' },
-  { name: 'eventos', alt: 'Gestão de eventos no Buffet Manager', label: 'Eventos' },
-  { name: 'orcamentos', alt: 'Orçamentos no Buffet Manager', label: 'Orçamentos' },
-  { name: 'contratos', alt: 'Contratos no Buffet Manager', label: 'Contratos' },
-  { name: 'pacotes', alt: 'Pacotes de eventos no Buffet Manager', label: 'Pacotes' },
-  { name: 'folha-pagamento', alt: 'Folha de pagamento no Buffet Manager', label: 'Folha de pagamento' },
-  { name: 'utensilios', alt: 'Gestão de utensílios no Buffet Manager', label: 'Utensílios' },
-  { name: 'dashboard-utensilios', alt: 'Utensílios e perdas no dashboard do Buffet Manager', label: 'Utensílios e perdas' },
+export const DEMO_SCREENS: (ShotRef & { tone: Tone })[] = [
+  { name: 'dashboard', alt: 'Dashboard do Buffet Manager', label: 'Dashboard', tone: 'indigo' },
+  { name: 'eventos', alt: 'Gestão de eventos no Buffet Manager', label: 'Eventos', tone: 'fuchsia' },
+  { name: 'orcamentos', alt: 'Orçamentos no Buffet Manager', label: 'Orçamentos', tone: 'fuchsia' },
+  { name: 'contratos', alt: 'Contratos no Buffet Manager', label: 'Contratos', tone: 'fuchsia' },
+  { name: 'pacotes', alt: 'Pacotes de eventos no Buffet Manager', label: 'Pacotes', tone: 'fuchsia' },
+  { name: 'folha-pagamento', alt: 'Folha de pagamento no Buffet Manager', label: 'Folha de pagamento', tone: 'violet' },
+  { name: 'utensilios', alt: 'Gestão de utensílios no Buffet Manager', label: 'Utensílios', tone: 'emerald' },
+  { name: 'dashboard-utensilios', alt: 'Utensílios e perdas no dashboard do Buffet Manager', label: 'Utensílios e perdas', tone: 'emerald' },
 ]

@@ -1,6 +1,7 @@
-import { useRef } from 'react'
+import { useRef, type CSSProperties } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { CONTACT_HREF } from '../config/site'
+import { BRASS_RGB } from '../lib/tones'
 import { useGsapScope } from '../hooks/useGsapScope'
 import { Button } from './ui/Button'
 
@@ -9,10 +10,18 @@ export function FinalCTASection() {
   useGsapScope(ref)
 
   return (
-    <section id="contato" ref={ref} aria-labelledby="cta-title" className="bg-ink-950 px-5 py-20 sm:px-8 sm:py-24">
+    <section
+      id="contato"
+      ref={ref}
+      aria-labelledby="cta-title"
+      className="relative isolate overflow-hidden bg-ink-950 px-5 py-20 sm:px-8 sm:py-24"
+      style={{ '--tone': BRASS_RGB, '--wash-x': '50%' } as CSSProperties}
+    >
+      {/* Fecho em latão: a luz quente do cloche */}
+      <div className="tone-wash pointer-events-none absolute inset-0 -z-10" aria-hidden="true" />
       <div
         data-reveal
-        className="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-ink-500 bg-ink-800 px-6 py-16 text-center sm:px-14 sm:py-20"
+        className="tone-card relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] border px-6 py-16 text-center sm:px-14 sm:py-20"
       >
         <div className="relative">
           <h2 id="cta-title" className="mx-auto max-w-2xl text-3xl font-semibold leading-tight text-balance sm:text-4xl">
