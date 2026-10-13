@@ -32,7 +32,7 @@ export function MediaCarousel({ slides, ariaLabel, active, onChange }: Props) {
   }
 
   const dotArrow =
-    'flex size-11 items-center justify-center rounded-full border border-white/15 bg-ink-800 text-white transition-colors hover:border-brass-300/50 hover:bg-ink-700'
+    'flex size-11 items-center justify-center rounded-full border border-white/15 bg-ink-800 text-white transition-[color,background-color,border-color,box-shadow] duration-300 hover:border-brass-300/60 hover:bg-ink-700 hover:text-brass-300 hover:shadow-[0_8px_24px_-11px_rgb(226_183_104/0.35)]'
 
   return (
     <div role="group" aria-roledescription="carrossel" aria-label={ariaLabel} onKeyDown={onKeyDown} className="relative">
@@ -117,7 +117,7 @@ export function VideoSlide({ src, alt, active }: { src: string; alt: string; act
         preload="none"
         poster={`${import.meta.env.BASE_URL}screenshots/dashboard.webp`}
         controls={reduced}
-        className="aspect-[16/10] w-full bg-ink-900 object-cover object-top"
+        className="aspect-video w-full bg-ink-900 object-contain"
       />
     </div>
   )

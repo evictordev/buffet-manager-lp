@@ -41,8 +41,8 @@ export function HeroSection() {
           </p>
           <div data-hero-text className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Button href={CONTACT_HREF} size="lg">
-              Pedir teste grátis no WhatsApp
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+              Teste grátis por 1 mês
+              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
             </Button>
             <Button href="#demonstracao" variant="secondary" size="lg">
               <PlayCircle className="size-4" aria-hidden="true" />

@@ -43,8 +43,8 @@ export function FinalCTASection() {
         </ol>
         <div className="mt-10">
           <Button href={CONTACT_HREF} size="lg">
-            Pedir teste grátis no WhatsApp
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+            Teste grátis por 1 mês
+            <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
           </Button>
           <p className="mt-4 text-sm text-mist-400">Sem cartão de crédito.</p>
         </div>

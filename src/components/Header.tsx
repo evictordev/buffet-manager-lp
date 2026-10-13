@@ -153,7 +153,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <Button href={CONTACT_HREF} className="px-3 hover:translate-y-0! sm:px-4">
-            Teste grátis<span className="hidden sm:inline"> no WhatsApp</span>
+            Teste grátis<span className="hidden sm:inline"> por 1 mês</span>
             <ArrowRight className="cta-arrow hidden size-4 min-[400px]:block" aria-hidden="true" />
           </Button>
           <button

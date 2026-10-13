@@ -10,8 +10,8 @@ type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
 
 const variants: Record<Variant, string> = {
   // Igual ao botão principal do sistema: fundo branco, texto escuro
-  primary: 'bg-white text-ink-950 shadow-soft hover:bg-mist-100',
-  secondary: 'border border-ink-500 bg-ink-800/70 text-white hover:border-brass-400/50 hover:bg-ink-700',
+  primary: 'bg-white text-ink-950 shadow-soft hover:bg-mist-100 hover:shadow-[0_1px_0_rgb(255_255_255/0.03)_inset,0_12px_30px_-14px_rgb(226_183_104/0.42)]',
+  secondary: 'border border-ink-500 bg-ink-800/70 text-white hover:border-brass-400/60 hover:bg-ink-700 hover:shadow-[0_12px_30px_-16px_rgb(226_183_104/0.32)]',
 }
 
 const sizes = {
@@ -26,7 +26,7 @@ export function Button({ variant = 'primary', size = 'md', className = '', href,
     <a
       href={href}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-      className={`group inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-[background-color,border-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 active:translate-y-0 ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`group inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-[background-color,border-color,transform,box-shadow] duration-300 ease-out ${variants[variant]} ${sizes[size]} ${className}`}
       {...rest}
     >
       {children}

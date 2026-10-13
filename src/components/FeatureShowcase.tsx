@@ -15,7 +15,7 @@ import { ScreenshotFrame } from './ui/ScreenshotFrame'
 type Props = { group: FeatureGroup; reverse?: boolean }
 
 const sideArrow =
-  'absolute top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white backdrop-blur transition-colors hover:border-brass-300/50 hover:bg-ink-950/90 sm:flex'
+  'absolute top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-ink-950/70 text-white backdrop-blur transition-[color,background-color,border-color,box-shadow] duration-300 hover:border-brass-300/60 hover:bg-ink-950/90 hover:text-brass-300 hover:shadow-[0_8px_24px_-11px_rgb(226_183_104/0.35)] sm:flex'
 
 /** Bloco de uma categoria de funcionalidades: texto, recursos e capturas de tela correspondentes. */
 export function FeatureShowcase({ group, reverse = false }: Props) {
