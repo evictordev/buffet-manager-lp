@@ -22,6 +22,9 @@ if (import.meta.env.DEV && !SITE.contactConfigured) {
   console.warn('[Buffet Manager] VITE_WHATSAPP_NUMBER não configurado. Veja .env.example.')
 }
 
+/** Endereço do sistema (login) para quem já é cliente. */
+export const APP_HREF = 'https://app.buffetmaneger.tech'
+
 /** Caminho das capturas de tela do sistema (public/screenshots/<nome>.webp). */
 export const screenshot = (name: string) => `${import.meta.env.BASE_URL}screenshots/${name}.webp`
 

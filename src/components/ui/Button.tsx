@@ -21,7 +21,7 @@ const sizes = {
 
 /** Link estilizado como botão. Links externos recebem rel/target seguros. */
 export function Button({ variant = 'primary', size = 'md', className = '', href, children, ...rest }: Props) {
-  const external = typeof href === 'string' && /^https?:\/\//.test(href)
+  const external = typeof href === 'string' && /^https?:\/\//.test(href) && rest.target !== '_self'
   return (
     <a
       href={href}
